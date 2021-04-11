@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/chats_fragment">
+
+    <fragment
+        android:id="@+id/chats_fragment"
+        android:name="br.felipefcosta.mobchat.ui.views.ChatsFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_chats"/>
+    <fragment
+        android:id="@+id/contacts_fragment"
+        android:name="br.felipefcosta.mobchat.ui.views.ContactsFragment"
+        android:label="@string/contacts_fragment"
+        tools:layout="@layout/fragment_contacts">
+        <action
+            android:id="@+id/contacts_to_search_action"
+            app:destination="@id/search_contacts_fragment"
+            app:enterAnim="@anim/slide_up"
+            app:popUpTo="@id/search_contacts_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/search_fragment"
+        android:name="br.felipefcosta.mobchat.ui.views.SearchFragment"
+        android:label="fragment_search_contacts"
+        tools:layout="@layout/fragment_search" />
+
+</navigation>

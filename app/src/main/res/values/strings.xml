@@ -1,0 +1,72 @@
+<resources>
+    <string name="app_name">MobChat</string>
+    <string name="btn_signup">Increver-se</string>
+    <string name="btn_login">Entrar</string>
+    <string name="btn_next_txt">Próximo</string>
+    <string name="btn_previous">Anterior</string>
+    <string name="btn_add_photo">Adicionar Foto</string>
+    <string name="btn_cancel">Cancelar</string>
+    <string name="btn_ok">Ok</string>
+    <string name="btn_finish">Finalizar</string>
+    <string name="btn_create_account">Criar Conta</string>
+    <string name="btn_camera">Camera</string>
+    <string name="btn_gallery">Galeria</string>
+    <string name="msg_empty_password">
+        Sua senha deve ter no mínimo 6 caracteres, incluindo uma letra maiúscula,
+        uma minúscula, um número e um caractere especial(@#$%^&amp;+=!).
+    </string>
+    <string name="msg_not_confirm_password">A confirmação da senha é diferente da senha.</string>
+    <string name="msg_valid_email">Digite um e-mail válido.</string>
+    <string name="msg_valid_password">Digite sua senha.</string>
+    <string name="msg_valid_length_username">
+        O nome de usuário deve 3 ou mais caracteres entre letras e números.
+    </string>
+    <string name="msg_valid_mobile_number">
+        Digite o numéro do seu celular com código da cidade ou região
+    </string>
+    <string name="msg_valid_char_username">O nome de usuário deve 3 ou mais caracteres.</string>
+    <string name="msg_valid_char_name">O nome deve 2 ou mais caracteres.</string>
+    <string name="msg_valid_char_surname">O sobrenome deve 2 ou mais caracteres.</string>
+    <string name="msg_valid_char_city">O digite o nome da sua cidade.</string>
+    <string name="msg_valid_char_country">O digite seu país.</string>
+    <string name="msg_valid_char_birth_date">*</string>
+    <string name="msg_valid_char_gender">*</string>
+    <string name="msg_excep_symmetric_key">Problemas ao carregar a chave:</string>
+    <string name="msg_excp_decrypt">Dados criptografados inválidos!</string>
+    <string name="list_item_male">Masculino</string>
+    <string name="list_item_female">Feminino</string>
+    <string name="list_item_other">Outro</string>
+    <string name="str_user_info">Sua conta foi criada! Agora adicione seu perfil.</string>
+    <string name="str_count_info">Crie sua conta</string>
+    <string name="str_user_photo_info">Agora só falta sua foto!</string>
+    <string name="str_email">E-mail</string>
+    <string name="str_password">Senha</string>
+    <string name="str_confirm_password">Confirmar senha</string>
+    <string name="str_name">Nome</string>
+    <string name="str_surname">Sobrenome</string>
+    <string name="str_username">Nome de usuário</string>
+    <string name="str_mobile_number">Celular</string>
+    <string name="str_birth_date">Data de nasc.</string>
+    <string name="str_gender">Gênero</string>
+    <string name="str_city">Cidade</string>
+    <string name="str_state">Estado</string>
+    <string name="str_country">País</string>
+    <string name="str_or">ou</string>
+    <string name="str_loading">Processando ...</string>
+    <string name="str_loading_account">Criando conta ...</string>
+    <string name="str_loading_profile">Adicionando perfil ...</string>
+    <string name="str_loading_photo">Adicionando foto ...</string>
+    <string name="str_search">Buscar</string>
+    <string name="str_add_user_failure">
+        Infelizmente não foi possível criar sua conta. Tente novamente mais tarde.
+    </string>
+    <string name="str_add_profile_failure">
+        Infelizmente não foi possível criar seu perfil. Tente novamente mais tarde.
+    </string>
+    <string name="str_login_failure">
+        Senha ou email incorretos. Por favor, tente novamente.
+    </string>
+    <string name="contacts_fragment">Contacts</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

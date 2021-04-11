@@ -1,0 +1,68 @@
+<resources>
+    <string name="app_name">MobChat</string>
+    <string name="btn_signup">Sign up</string>
+    <string name="btn_login">Sign in</string>
+    <string name="btn_next_txt">Próximo</string>
+    <string name="btn_previous">Anterior</string>
+    <string name="btn_add_photo">Addd Photo</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_ok">Ok</string>
+    <string name="btn_finish">Finalizar</string>
+    <string name="btn_create_account">Create account</string>
+    <string name="btn_camera">Camera</string>
+    <string name="btn_gallery">Gallery</string>
+    <string name="msg_empty_password">Enter your password.</string>
+    <string name="msg_not_confirm_password">Password confirmation doesn\'t match the password</string>
+    <string name="msg_valid_email">Enter a valid email address</string>
+    <string name="msg_valid_password">
+        Make sure it\'s at least 6 characters including a symbol,
+        a number, uppercase and lowercase letter.
+    </string>
+    <string name="msg_valid_length_username">Username must be 3 or more characters.</string>
+    <string name="msg_valid_mobile_number">
+       Enter your cell phone number with city or region code
+    </string>
+    <string name="msg_valid_char_username">Username may only contain alphanumeric characters.</string>
+    <string name="msg_valid_char_name">Enter your name.</string>
+    <string name="msg_valid_char_surname">Enter your surname.</string>
+    <string name="msg_valid_char_city">Enter your city.</string>
+    <string name="msg_valid_char_country">Enter your country.</string>
+    <string name="msg_valid_char_birth_date">*</string>
+    <string name="msg_valid_char_gender">*</string>
+    <string name="msg_excep_symmetric_key">Unable to load the symmetric key:</string>
+    <string name="msg_excp_decrypt">Invalid encrypted data!</string>
+    <string name="list_item_male">Male</string>
+    <string name="list_item_female">Female</string>
+    <string name="list_item_other">Other</string>
+    <string name="str_user_info">Your account has been created. Now fill your profile.</string>
+    <string name="str_count_info">Create your account</string>
+    <string name="str_user_photo_info">Now it is picture time!</string>
+    <string name="str_email">Email</string>
+    <string name="str_password">Password</string>
+    <string name="str_confirm_password">Password confirmation</string>
+    <string name="str_name">Name</string>
+    <string name="str_surname">Surname</string>
+    <string name="str_username">Username</string>
+    <string name="str_mobile_number">Mobile number</string>
+    <string name="str_birth_date">Birth Date</string>
+    <string name="str_gender">Gênero</string>
+    <string name="str_city">Cidade</string>
+    <string name="str_state">State</string>
+    <string name="str_country">Country</string>
+    <string name="str_or">or</string>
+    <string name="str_loading">Loading ...</string>
+    <string name="str_loading_account">Creating account ...</string>
+    <string name="str_loading_profile">Adding profile ...</string>
+    <string name="str_loading_photo">Adding photo ...</string>
+    <string name="str_search">Search</string>
+    <string name="str_add_user_failure">
+        Unfortunately it was not possible to create your account. Try again later.
+    </string>
+    <string name="str_add_profile_failure">
+        Unfortunately it was not possible to create your profile. Try again later.
+    </string>
+    <string name="str_login_failure">
+        Incorrect email or password. Please try again.
+    </string>
+    <string name="contacts_fragment">Contacts</string>
+</resources>
