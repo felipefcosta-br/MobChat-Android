@@ -5,32 +5,30 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavArgument
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import br.felipefcosta.mobchat.R
 import br.felipefcosta.mobchat.api.AuthApiService
-import br.felipefcosta.mobchat.api.ChatsApiService
+import br.felipefcosta.mobchat.api.ChatApiService
 import br.felipefcosta.mobchat.api.ProfileApiService
-import br.felipefcosta.mobchat.databinding.FragmentChatsBinding
+import br.felipefcosta.mobchat.databinding.FragmentChatListBinding
 import br.felipefcosta.mobchat.models.repositories.AuthRepository
-import br.felipefcosta.mobchat.models.repositories.ChatsRepository
+import br.felipefcosta.mobchat.models.repositories.ChatListRepository
 import br.felipefcosta.mobchat.models.repositories.ProfileRepository
 import br.felipefcosta.mobchat.models.services.*
-import br.felipefcosta.mobchat.viewmodels.ChatsFragmentViewModel
-import br.felipefcosta.mobchat.viewmodels.ChatsViewModelFactory
+import br.felipefcosta.mobchat.viewmodels.ChatListFragmentViewModel
+import br.felipefcosta.mobchat.viewmodels.MainChatsViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 /**
 List of all user chats
  */
-class ChatsFragment : Fragment() {
+class ChatListFragment : Fragment() {
 
-    lateinit var binding: FragmentChatsBinding
-    lateinit var viewModel: ChatsFragmentViewModel
+    lateinit var binding: FragmentChatListBinding
+    lateinit var viewModelMain: ChatListFragmentViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,15 +36,16 @@ class ChatsFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_chats, container, false
+            inflater, R.layout.fragment_chat_list, container, false
         )
 
         val encryptionManager = EncryptionManager(requireContext())
         val tokenStorageManager = TokenStorageManager(requireContext(), encryptionManager)
+        val profileStorageManager = ProfileStorageManager(requireContext(), encryptionManager)
 
-        val chatsService = ChatsApiService.create()
-        val chatsDataSource = ChatsDataSource() // adicionar o service
-        val chatsRepository = ChatsRepository()
+        val chatService = ChatApiService.create()
+        val chatDataSource = ChatListDataSource() // adicionar o service
+        val chatRepository = ChatListRepository()
 
         val authService = AuthApiService.create()
         val authDataSource = AuthDataSource(authService)
@@ -54,21 +53,22 @@ class ChatsFragment : Fragment() {
 
         val profileService = ProfileApiService.create()
         val profileDataSource = ProfileDataSource(profileService)
-        val profileRepository = ProfileRepository(profileDataSource, tokenStorageManager)
+        val profileRepository =
+            ProfileRepository(profileDataSource, tokenStorageManager, profileStorageManager)
 
-        viewModel = ViewModelProvider(
+        viewModelMain = ViewModelProvider(
             this,
-            ChatsViewModelFactory(
+            MainChatsViewModelFactory(
                 requireActivity().application,
-                chatsRepository,
+                chatRepository,
                 authRepository,
                 profileRepository
             )
-        ).get(ChatsFragmentViewModel::class.java)
+        ).get(ChatListFragmentViewModel::class.java)
 
         startChatsFragment()
 
-        viewModel.getUserProfile({profile ->
+        viewModelMain.getUserProfile({ profile ->
 
             val navController = findNavController()
             val arg = Bundle()

@@ -26,9 +26,20 @@ class AppUserDataSource(
             val response = appUserApiService.createUser(header, userPasswordDto)
             response.run {
                 if (this.isSuccessful) {
-                    val appUser = response.body() as AppUser
-                    success(appUser)
-                    Log.i("ProMIT", appUser.username.toString())
+                    if (response.body() != null){
+                        val appUser = AppUser(
+                            response.body()!!.id,
+                            response.body()!!.username,
+                            response.body()!!.email,
+                            response.body()!!.emailConfirmed,
+                            response.body()!!.phoneNumber,
+                            response.body()!!.phoneNumberConfirmed,
+                            response.body()!!.lockoutEnabled,
+                            response.body()!!.twoFactorEnabled,
+                            response.body()!!.accessFailedCount)
+                        success(appUser)
+                        Log.i("ProMIT", appUser.username.toString())
+                    }
                 } else {
                     failure()
                 }

@@ -39,6 +39,7 @@ class SplashFragment : Fragment() {
         )
         val encryptionManager = EncryptionManager(requireContext())
         val tokenStorageManager = TokenStorageManager(requireContext(), encryptionManager)
+        val profileStorageManager = ProfileStorageManager(requireContext(), encryptionManager)
 
         val authService = AuthApiService.create()
         val authDataSource = AuthDataSource(authService)
@@ -50,7 +51,8 @@ class SplashFragment : Fragment() {
 
         val profileService = ProfileApiService.create()
         val profileDataSource = ProfileDataSource(profileService)
-        val profileRepository = ProfileRepository(profileDataSource, tokenStorageManager)
+        val profileRepository =
+            ProfileRepository(profileDataSource, tokenStorageManager, profileStorageManager)
 
         viewModel = ViewModelProvider(
             this,
@@ -62,6 +64,8 @@ class SplashFragment : Fragment() {
             )
         ).get(SplashFragmentViewModel::class.java)
 
+        binding.viewmodel = viewModel
+        binding.lifecycleOwner = this
 
         if (activity?.window != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {

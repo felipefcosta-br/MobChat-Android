@@ -16,10 +16,7 @@ import br.felipefcosta.mobchat.models.entities.Profile
 import br.felipefcosta.mobchat.models.repositories.AuthRepository
 import br.felipefcosta.mobchat.models.repositories.ContactsRepository
 import br.felipefcosta.mobchat.models.repositories.ProfileRepository
-import br.felipefcosta.mobchat.models.services.AuthDataSource
-import br.felipefcosta.mobchat.models.services.EncryptionManager
-import br.felipefcosta.mobchat.models.services.ProfileDataSource
-import br.felipefcosta.mobchat.models.services.TokenStorageManager
+import br.felipefcosta.mobchat.models.services.*
 import br.felipefcosta.mobchat.viewmodels.ContactsFragmentViewModel
 import br.felipefcosta.mobchat.viewmodels.ContactsViewModelFactory
 
@@ -43,6 +40,7 @@ class ContactsFragment : Fragment() {
 
         val encryptionManager = EncryptionManager(requireContext())
         val tokenStorageManager = TokenStorageManager(requireContext(), encryptionManager)
+        val profileStorageManager = ProfileStorageManager(requireContext(), encryptionManager)
 
         val repository = ContactsRepository()
 
@@ -52,7 +50,8 @@ class ContactsFragment : Fragment() {
 
         val profileService = ProfileApiService.create()
         val profileDataSource = ProfileDataSource(profileService)
-        val profileRepository = ProfileRepository(profileDataSource, tokenStorageManager)
+        val profileRepository =
+            ProfileRepository(profileDataSource, tokenStorageManager, profileStorageManager)
 
         viewModel = ViewModelProvider(
             this,
@@ -64,6 +63,8 @@ class ContactsFragment : Fragment() {
             )
         ).get(ContactsFragmentViewModel::class.java)
 
+        binding.viewmodel = viewModel
+        binding.lifecycleOwner = this
 
 
         return binding.root
@@ -77,7 +78,7 @@ class ContactsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         var arg = arguments?.getParcelable<Profile>("profileArg")
-        if (arg != null){
+        if (arg != null) {
             viewModel.profile = arg
         }
 

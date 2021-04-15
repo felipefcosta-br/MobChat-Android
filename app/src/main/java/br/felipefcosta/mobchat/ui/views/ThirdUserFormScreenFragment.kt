@@ -51,7 +51,6 @@ class ThirdUserFormScreenFragment : Fragment() {
     lateinit var viewModel: ThirdUserFormScreenFragmentViewModel
     private lateinit var binding: FragmentThirdUserFormScreenBinding
     private lateinit var photoBottomSheetDialog: BottomSheetDialog
-    private lateinit var activityResultRegistry: ActivityResultRegistry
     private lateinit var takeCameraPicture: ActivityResultLauncher<Uri>
     private lateinit var takeGalleryPicture: ActivityResultLauncher<String>
 
@@ -90,27 +89,42 @@ class ThirdUserFormScreenFragment : Fragment() {
 
         val encryptionManager = EncryptionManager(requireContext())
         val tokenStorageManager = TokenStorageManager(requireContext(), encryptionManager)
+        val profileStorageManager = ProfileStorageManager(requireContext(), encryptionManager)
 
         val storageBlobApiService = StorageBlobApiService()
         val storageBlobDataSource = StorageBlobDataSource(storageBlobApiService)
         val storageBlobRepository = StorageBlobRepository(storageBlobDataSource)
 
-        val authService = AuthApiService.create(profileArgs.email.toString(), args.passArg)
+        val authService = AuthApiService.create()
         val authDataSource = AuthDataSource(authService)
         val authRepository = AuthRepository(authDataSource, tokenStorageManager)
 
         val profileService = ProfileApiService.create()
         val profileDataSource = ProfileDataSource(profileService)
-        val repository = ProfileRepository(profileDataSource,  tokenStorageManager)
+        val repository =
+            ProfileRepository(profileDataSource, tokenStorageManager, profileStorageManager)
 
         viewModel = ViewModelProvider(
             this,
-            ThirdUserFormViewModelFactory(this.requireActivity().application, repository, authRepository, storageBlobRepository)
+            ThirdUserFormViewModelFactory(
+                this.requireActivity().application,
+                repository,
+                authRepository,
+                storageBlobRepository
+            )
         ).get(ThirdUserFormScreenFragmentViewModel::class.java)
+
+        binding.viewmodel = viewModel
+        binding.lifecycleOwner = this
 
         viewModel.profile = profileArgs
 
-        binding.profileImageView.setImageDrawable(resources.getDrawable(R.drawable.ic_account_circle, null))
+        binding.profileImageView.setImageDrawable(
+            resources.getDrawable(
+                R.drawable.ic_account_circle,
+                null
+            )
+        )
 
         binding.addUserProfilePhotoBtn.setOnClickListener {
 
@@ -157,17 +171,19 @@ class ThirdUserFormScreenFragment : Fragment() {
             }
     }
 
-    private fun addUserProfile(view: View){
+    private fun addUserProfile(view: View) {
 
         val loadingDialogFragment = LoadingDialogFragment(getString(R.string.str_loading_profile))
         loadingDialogFragment.show(parentFragmentManager, "")
-        viewModel.addUserProfile(requireContext(), {profile ->
-            loadingDialogFragment.stopLoadingDialog()
+        viewModel.updateProfile(requireContext(), { response ->
+
             val mainActivity = Intent(activity, MainActivity::class.java)
             startActivity(mainActivity)
             /*val action = ThirdUserFormScreenFragmentDirections.thirdToMainNav(profile)
             findNavController().navigate(action)*/
+            loadingDialogFragment.stopLoadingDialog()
             this.activity?.finish()
+
         }, {
             val failureSnack = Snackbar.make(
                 view,

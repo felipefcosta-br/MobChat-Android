@@ -13,7 +13,9 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class SecondUserFormScreenFragmentViewModel(
-    application: Application
+    application: Application,
+    private val repository: ProfileRepository,
+    private val authRepository: AuthRepository,
 ) : AndroidViewModel(application) {
     lateinit var appUser: AppUser
     lateinit var name: String
@@ -25,14 +27,13 @@ class SecondUserFormScreenFragmentViewModel(
     lateinit var birthDate: String
     lateinit var registrationDate: String
 
-    fun fillUserProfile(): Profile? {
-
-        var profile: Profile? = null
-        birthDate = formatBirthDate(birthDateStr)
-        registrationDate = LocalDateTime.now().toString()
+    fun addProfile(success: (Profile) -> Unit, failure: () -> Unit) {
 
         if (isReadyToAddProfile()) {
-            profile = Profile(
+            birthDate = formatBirthDate(birthDateStr)
+            registrationDate = LocalDateTime.now().toString()
+
+            val profile = Profile(
                 null,
                 appUser.id.toString(),
                 name,
@@ -50,8 +51,17 @@ class SecondUserFormScreenFragmentViewModel(
                 birthDate,
                 registrationDate
             )
+            authRepository.getToken({ token ->
+                repository.addProfile(profile, token, {
+                    success(it)
+                }, {
+                    failure()
+                })
+            }, {
+                failure()
+            })
         }
-        return profile
+
     }
 
     /*fun getAllCountries(): ArrayList<String> {

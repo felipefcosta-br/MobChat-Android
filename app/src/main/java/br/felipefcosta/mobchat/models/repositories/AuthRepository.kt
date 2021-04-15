@@ -57,6 +57,10 @@ class AuthRepository(
         })
     }
 
+    fun getStoragedToken(): Token?{
+        return tokenStorageManager.getToken()
+    }
+
     fun isValidToken(): Boolean{
         return tokenStorageManager.isValidToken()
     }

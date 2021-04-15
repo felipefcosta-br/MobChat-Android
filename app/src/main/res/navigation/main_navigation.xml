@@ -3,28 +3,46 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/chats_fragment">
+    app:startDestination="@id/main_chats_fragment">
 
     <fragment
-        android:id="@+id/chats_fragment"
-        android:name="br.felipefcosta.mobchat.ui.views.ChatsFragment"
+        android:id="@+id/main_chats_fragment"
+        android:name="br.felipefcosta.mobchat.ui.views.ChatListFragment"
         android:label="@string/app_name"
-        tools:layout="@layout/fragment_chats"/>
+        tools:layout="@layout/fragment_chat_list"/>
     <fragment
         android:id="@+id/contacts_fragment"
         android:name="br.felipefcosta.mobchat.ui.views.ContactsFragment"
         android:label="@string/contacts_fragment"
-        tools:layout="@layout/fragment_contacts">
-        <action
-            android:id="@+id/contacts_to_search_action"
-            app:destination="@id/search_contacts_fragment"
-            app:enterAnim="@anim/slide_up"
-            app:popUpTo="@id/search_contacts_fragment" />
-    </fragment>
+        tools:layout="@layout/fragment_contacts"/>
     <fragment
         android:id="@+id/search_fragment"
         android:name="br.felipefcosta.mobchat.ui.views.SearchFragment"
-        android:label="fragment_search_contacts"
-        tools:layout="@layout/fragment_search" />
+        android:label="@string/str_search"
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/search_to_chat_action"
+            app:destination="@id/chat_fragment"
+            app:popUpTo="@id/chat_fragment">
+            <argument
+                android:name="profileArg"
+                app:argType="br.felipefcosta.mobchat.models.entities.Profile" />
+            <argument
+                android:name="contactProfileArg"
+                app:argType="br.felipefcosta.mobchat.models.entities.Profile" />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/chat_fragment"
+        android:name="br.felipefcosta.mobchat.ui.views.ChatFragment"
+        android:label="fragment_private_chat"
+        tools:layout="@layout/fragment_chat" >
+        <argument
+            android:name="profileArg"
+            app:argType="br.felipefcosta.mobchat.models.entities.Profile" />
+        <argument
+            android:name="contactProfileArg"
+            app:argType="br.felipefcosta.mobchat.models.entities.Profile" />
+    </fragment>
 
 </navigation>

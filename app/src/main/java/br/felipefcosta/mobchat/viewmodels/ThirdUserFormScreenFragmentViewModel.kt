@@ -27,45 +27,24 @@ class ThirdUserFormScreenFragmentViewModel(
     lateinit var profile: Profile
     lateinit var photoUri: Uri
 
-    fun addUserProfile(context: Context, success: (Profile) -> Unit, failure: () -> Unit) {
-
-        if (this::photoUri.isInitialized && photoUri != null) {
-            var inputStream = context.contentResolver.openInputStream(photoUri)
-            if (inputStream != null) {
-                val photoName = "photo${profile.accountId.hashCode()}.jpg"
-                storageBlobRepository.addInputStream(inputStream, photoName, {
-                    profile.photo = it
-                    addProfile({profile ->
-                        success(profile)
-                    }, {
-                        failure()
-                    })
+    fun updateProfile(context: Context, success: (Boolean) -> Unit, failure: () -> Unit) {
+        var inputStream = context.contentResolver.openInputStream(photoUri)
+        if (inputStream != null) {
+            val photoName = "photo${profile.accountId.hashCode()}.jpg"
+            storageBlobRepository.addInputStream(inputStream, photoName, { it ->
+                profile.photo = it
+                repository.updateProfile(profile, { response ->
+                    success(response)
                 }, {
                     failure()
                 })
-            }
-        }else{
-            addProfile({profile ->
-                success(profile)
             }, {
                 failure()
             })
+        }else{
+            success(true)
         }
     }
-
-    fun addProfile(success: (Profile) -> Unit, failure: () -> Unit) {
-        authRepository.getToken({ token ->
-            repository.addProfile(profile, token, {
-                success(it)
-            }, {
-                failure()
-            })
-        }, {
-            failure()
-        })
-
-    }
-
 
     fun createImageFile(context: Context, userId: String): File {
         val timeStamp = LocalDateTime.now().toEpochSecond(ZoneOffset.of("Z"))

@@ -3,14 +3,18 @@ package br.felipefcosta.mobchat.models.services
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.util.Base64
+import android.util.Log
 import br.felipefcosta.mobchat.models.dtos.JWTTokenDto
 import br.felipefcosta.mobchat.models.entities.JWTHeader
 import br.felipefcosta.mobchat.models.entities.JWTPayload
 import br.felipefcosta.mobchat.models.entities.Token
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
+import java.sql.Timestamp
+import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
+import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.util.*
 
@@ -89,6 +93,9 @@ class TokenStorageManager(val context: Context, val encryptionManager: Encryptio
 
     fun tokenDecoder(): JWTTokenDto? {
         loadToken()
+        if (token?.accessToken == null)
+            return null
+
         val tokenStr = token?.accessToken.toString()
         val parts = tokenStr.split(".")
 
@@ -104,29 +111,29 @@ class TokenStorageManager(val context: Context, val encryptionManager: Encryptio
             moshi.adapter<JWTPayload>(JWTPayload::class.java)
         val jwtPayload = jsonPayloadAdapter.fromJson(payload)
 
-        if (jwtHeader != null && jwtPayload != null)
-            return JWTTokenDto(jwtHeader, jwtPayload)
+        if (jwtHeader == null && jwtPayload == null)
+            return null
 
-        return null
+        return JWTTokenDto(jwtHeader!!, jwtPayload!!)
     }
 
     fun isValidToken(): Boolean {
+        var jwtTokenDto = tokenDecoder()
         loadToken()
-        var secondToEx = token?.expiresIn
+        val tokenStr = token?.expiresIn.toString()
+        Log.i("ProMIT", tokenStr.toString())
 
-        if (secondToEx != null) {
-            var exp = token!!.authDate
-            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS")
-            val expiresDate = Date.from(
-                LocalDateTime.parse(exp, formatter).atZone(ZoneId.systemDefault()).toInstant()
+        if (jwtTokenDto?.jwtPayload?.exp != null) {
+
+            val expDate = LocalDateTime.ofInstant(
+                Instant.ofEpochSecond(jwtTokenDto?.jwtPayload?.exp.toLong()),
+                ZoneId.systemDefault()
             )
+            val currentDate = LocalDateTime.ofInstant(
+                Instant.ofEpochMilli(System.currentTimeMillis()),
+                ZoneId.systemDefault())
 
-            var now = LocalDateTime.now()
-            val date = Date.from(now.atZone(ZoneId.systemDefault()).toInstant())
-
-            val diff = date.time - expiresDate.time
-            val diffSeconds = diff / 1000
-            if (secondToEx.toInt() > diffSeconds)
+            if (currentDate.isBefore(expDate))
                 return true
         }
         return false

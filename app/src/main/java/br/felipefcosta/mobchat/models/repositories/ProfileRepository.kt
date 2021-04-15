@@ -4,11 +4,14 @@ import android.util.Log
 import br.felipefcosta.mobchat.models.entities.Profile
 import br.felipefcosta.mobchat.models.entities.Token
 import br.felipefcosta.mobchat.models.services.ProfileDataSource
+import br.felipefcosta.mobchat.models.services.ProfileStorageManager
 import br.felipefcosta.mobchat.models.services.TokenStorageManager
+import kotlinx.coroutines.flow.Flow
 
 class ProfileRepository(
     private val remoteDataSource: ProfileDataSource,
-    private val tokenStorageManager: TokenStorageManager
+    private val tokenStorageManager: TokenStorageManager,
+    private val profileStorageManager: ProfileStorageManager
 ) {
 
     fun addProfile(
@@ -46,8 +49,9 @@ class ProfileRepository(
         val token = tokenStorageManager.getToken()
         if (!token?.accessToken.isNullOrBlank()) {
             val header = "bearer ${token?.accessToken.toString()}"
-            remoteDataSource.searchProfile(header, searchTxt, { profile ->
-                success(profile)
+            remoteDataSource.searchProfile(header, searchTxt, { profiles ->
+                Log.i("ProMIT", profiles.toString())
+                success(profiles)
             }, {
                 Log.i("ProMIT", "repository")
                 failure()
@@ -59,14 +63,14 @@ class ProfileRepository(
 
     fun updateProfile(
         profile: Profile,
-        success: (Profile) -> Unit,
+        success: (Boolean) -> Unit,
         failure: () -> Unit
     ) {
         val token = tokenStorageManager.getToken()
         if (!token?.accessToken.isNullOrBlank()) {
             val header = "bearer ${token?.accessToken.toString()}"
-            remoteDataSource.addUserProfile(header, profile, { profile ->
-                success(profile)
+            remoteDataSource.updateUserProfile(header, profile, { response ->
+                success(response)
             }, {
                 Log.i("ProMIT", "repository")
                 failure()
@@ -80,6 +84,13 @@ class ProfileRepository(
 
     fun getProfileByEmail(email: String){
 
+    }
+
+    fun storeLocalProfile(profile: Profile){
+        profileStorageManager.saveProfile(profile)
+    }
+    fun getLocalProfile():Profile?{
+        return profileStorageManager.getProfile()
     }
 
 }

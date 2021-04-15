@@ -12,8 +12,6 @@ data class Token(
     @Json(name = "expires_in")
     val expiresIn: String?,
     @Json(name = "scope")
-    val scope: String?,
-    @Json(name = "auth_date")
-    val authDate: String?
+    val scope: String?
 ) {
 }

@@ -3,6 +3,7 @@ package br.felipefcosta.mobchat.api
 import android.util.Log
 import br.felipefcosta.mobchat.models.entities.Profile
 import br.felipefcosta.mobchat.utils.Constants
+import kotlinx.coroutines.flow.Flow
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -33,16 +34,17 @@ interface ProfileApiService {
         @Path("accountId") accountId: String
     ): Response<Profile>
 
-    @PUT("Profiles")
-    fun updateProfile(
+    @PUT("Profiles/{id}")
+    suspend fun updateProfile(
         @Header("Authorization") header: String,
+        @Path(value = "id") id: String,
         @Body profile: Profile
-    ): Call<Profile>
+    ): Response<Boolean>
 
     @GET("Profiles/search/{searchTxt}")
-    fun searchUserProfile(
+    suspend fun searchUserProfile(
         @Header("Authorization") header: String,
-        @Path("accountId") accountId: String
+        @Path("searchTxt") searchTxt: String
     ): Response<List<Profile>>
 
     @GET("Profiles")
@@ -56,8 +58,8 @@ interface ProfileApiService {
                     Log.i("ProMIT", message)
                 }
             })
-            logging.level = (HttpLoggingInterceptor.Level.BODY)
-            */
+            logging.level = (HttpLoggingInterceptor.Level.BODY)*/
+
 
             val client = OkHttpClient.Builder()
                 .connectTimeout(1, TimeUnit.MINUTES)

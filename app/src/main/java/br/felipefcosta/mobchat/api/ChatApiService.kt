@@ -7,7 +7,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
 import java.util.concurrent.TimeUnit
 
-class ChatsApiService {
+class ChatApiService {
 
     companion object {
         fun create(): ProfileApiService {

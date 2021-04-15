@@ -7,6 +7,10 @@ import br.felipefcosta.mobchat.models.entities.Profile
 import br.felipefcosta.mobchat.models.entities.Token
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.count
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import retrofit2.Call
@@ -61,39 +65,35 @@ class ProfileDataSource(private val profileApiService: ProfileApiService) {
         success: (List<Profile>) -> Unit,
         failure: () -> Unit
     ) {
-        CoroutineScope(Dispatchers.IO).launch {
-            val response = profileApiService.searchUserProfile(header, searchTxt)
-            response.run {
-                if (this.isSuccessful) {
+       runBlocking {
+           var response = profileApiService.searchUserProfile(header, searchTxt)
+           response.run {
+               var profileList: List<Profile> = emptyList()
+               if (this.isSuccessful){
+                   profileList = response.body() as List<Profile>
+                   success(profileList)
+               }else{
+                   failure()
+               }
+           }
+       }
+    }
 
+    fun updateUserProfile(
+        header: String, profile: Profile,
+        success: (Boolean) -> Unit, failure: () -> Unit
+    ) {
+
+        runBlocking {
+
+            val response = profileApiService.updateProfile(header, profile.id!!, profile)
+            response.run {
+                if (response.body() == true) {
+                    success(response.body()!!)
                 } else {
                     failure()
                 }
             }
         }
-
-    }
-
-    fun updateUserProfile(
-        header: String, profile: Profile,
-        success: (Profile) -> Unit, failure: () -> Unit
-    ) {
-        val call = profileApiService.updateProfile(header, profile)
-        call.enqueue(object : Callback<Profile> {
-            override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
-                if (response.isSuccessful) {
-                    val profile = response.body() as Profile
-                    success(profile)
-                } else {
-                    failure()
-                }
-            }
-
-            override fun onFailure(call: Call<Profile>, t: Throwable) {
-                Log.i("ProMIT", "datasource222${t.message}")
-                failure()
-            }
-        })
-
     }
 }

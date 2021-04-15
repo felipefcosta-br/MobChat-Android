@@ -14,14 +14,12 @@ class AuthDataSource(private val authApiService: AuthApiService) {
         val call = authApiService?.getToken()
         call?.enqueue(object : Callback<Token> {
             override fun onResponse(call: Call<Token>, response: Response<Token>) {
-                val authDate = LocalDateTime.now().toString()
                 if (response.isSuccessful) {
                     val token = Token(
                         response.body()?.accessToken,
                         response.body()?.tokenType,
                         response.body()?.expiresIn,
-                        response.body()?.scope,
-                        authDate
+                        response.body()?.scope
                     )
                     Log.i("ProMIT", token.accessToken.toString())
                     success(token)
@@ -44,14 +42,12 @@ class AuthDataSource(private val authApiService: AuthApiService) {
         val call = authApiService?.getToken(authMap)
         call?.enqueue(object : Callback<Token> {
             override fun onResponse(call: Call<Token>, response: Response<Token>) {
-                val authDate = LocalDateTime.now().toString()
                 if (response.isSuccessful) {
                     val token = Token(
                         response.body()?.accessToken,
                         response.body()?.tokenType,
                         response.body()?.expiresIn,
-                        response.body()?.scope,
-                        authDate
+                        response.body()?.scope
                     )
                     Log.i("ProMIT", token.accessToken.toString())
                     success(token)

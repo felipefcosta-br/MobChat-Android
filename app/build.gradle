@@ -48,8 +48,11 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-    //ViewModel-------------------------------------------------------------------------------------
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
+    //LifeCycle - ViewModel-------------------------------------------------------------------------------------
+    def lifecycle_version = "2.2.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
     //Fragment--------------------------------------------------------------------------------------
     def fragment_version = "1.3.1"
     implementation "androidx.fragment:fragment-ktx:$fragment_version"
@@ -84,8 +87,11 @@ dependencies {
     //Azure Storage---------------------------------------------------------------------------------
     implementation 'com.microsoft.azure.android:azure-storage-android:2.0.0@aar'
     //Azure SignalR---------------------------------------------------------------------------------
-    def signalr_version = "1.0.0"
+    def signalr_version = "5.0.5"
     implementation "com.microsoft.signalr:signalr:$signalr_version"
+
+    implementation "ch.qos.logback:logback-classic:1.2.3"
+
 
 
 

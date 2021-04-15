@@ -19,14 +19,13 @@ import androidx.navigation.fragment.findNavController
 import br.felipefcosta.mobchat.R
 import br.felipefcosta.mobchat.api.AuthApiService
 import br.felipefcosta.mobchat.api.ProfileApiService
+import br.felipefcosta.mobchat.api.StorageBlobApiService
 import br.felipefcosta.mobchat.databinding.FragmentSecondUserFormScreenBinding
 import br.felipefcosta.mobchat.models.entities.AppUser
 import br.felipefcosta.mobchat.models.repositories.AuthRepository
 import br.felipefcosta.mobchat.models.repositories.ProfileRepository
-import br.felipefcosta.mobchat.models.services.AuthDataSource
-import br.felipefcosta.mobchat.models.services.EncryptionManager
-import br.felipefcosta.mobchat.models.services.ProfileDataSource
-import br.felipefcosta.mobchat.models.services.TokenStorageManager
+import br.felipefcosta.mobchat.models.repositories.StorageBlobRepository
+import br.felipefcosta.mobchat.models.services.*
 import br.felipefcosta.mobchat.ui.dialogs.DateSpinnerDialogFragment
 import br.felipefcosta.mobchat.ui.dialogs.LoadingDialogFragment
 import br.felipefcosta.mobchat.viewmodels.SecondUserFormScreenFragmentViewModel
@@ -72,10 +71,22 @@ class SecondUserFormScreenFragment : Fragment() {
         if (args.appUserArg.username == null && args.usernameArgs == null && args.passArg == null) {
             return
         }
+        val encryptionManager = EncryptionManager(requireContext())
+        val tokenStorageManager = TokenStorageManager(requireContext(), encryptionManager)
+        val profileStorageManager = ProfileStorageManager(requireContext(), encryptionManager)
+
+        val authService = AuthApiService.create(args.appUserArg.username!!, args.passArg!!)
+        val authDataSource = AuthDataSource(authService)
+        val authRepository = AuthRepository(authDataSource, tokenStorageManager)
+
+        val profileService = ProfileApiService.create()
+        val profileDataSource = ProfileDataSource(profileService)
+        val repository =
+            ProfileRepository(profileDataSource, tokenStorageManager, profileStorageManager)
 
         viewModel = ViewModelProvider(
             this,
-            SecondUserFormViewModelFactory(this.requireActivity().application)
+            SecondUserFormViewModelFactory(this.requireActivity().application, repository, authRepository)
         )
             .get(SecondUserFormScreenFragmentViewModel::class.java)
 
@@ -150,13 +161,18 @@ class SecondUserFormScreenFragment : Fragment() {
             val loadingDialogFragment = LoadingDialogFragment(getString(R.string.str_loading_profile))
             if (viewModel.isReadyToAddProfile()) {
                 loadingDialogFragment.show(parentFragmentManager, "")
-                val profile = viewModel.fillUserProfile()
-                if (profile != null){
-                    val action = SecondUserFormScreenFragmentDirections.secondToThirdAction(profile, args.passArg!!)
+                val profile = viewModel.addProfile({profile ->
+                    val action = SecondUserFormScreenFragmentDirections.secondToThirdAction(profile)
                     findNavController().navigate(action)
                     loadingDialogFragment.stopLoadingDialog()
-                }
 
+                },{
+                    val failureSnack = Snackbar.make(
+                        view,
+                        getString(R.string.str_add_profile_failure),
+                        Snackbar.LENGTH_LONG
+                    )
+                })
 
             } else {
                 binding.addNameEditTextLayout.error =

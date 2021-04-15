@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.views.ChatsFragment">
+    tools:context=".ui.views.ChatListFragment">
 
     <data>
         <variable
             name="viewmodel"
-            type="br.felipefcosta.mobchat.viewmodels.ChatsFragmentViewModel" />
+            type="br.felipefcosta.mobchat.viewmodels.ChatListFragmentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

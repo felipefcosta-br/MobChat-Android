@@ -4,12 +4,12 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import br.felipefcosta.mobchat.models.entities.Profile
 import br.felipefcosta.mobchat.models.repositories.AuthRepository
-import br.felipefcosta.mobchat.models.repositories.ChatsRepository
+import br.felipefcosta.mobchat.models.repositories.ChatListRepository
 import br.felipefcosta.mobchat.models.repositories.ProfileRepository
 
-class ChatsFragmentViewModel(
+class ChatListFragmentViewModel(
     application: Application,
-    private val repository: ChatsRepository,
+    private val repositoryMain: ChatListRepository,
     private val authRepository: AuthRepository,
     private val profileRepository: ProfileRepository
 
@@ -21,6 +21,7 @@ class ChatsFragmentViewModel(
         if (jwtToken !== null) {
             profileRepository.getProfileByAccountId(jwtToken.jwtPayload.sub, {
                 profile = it
+                profileRepository.storeLocalProfile(profile)
                 success(it)
             }, {
                 failure()

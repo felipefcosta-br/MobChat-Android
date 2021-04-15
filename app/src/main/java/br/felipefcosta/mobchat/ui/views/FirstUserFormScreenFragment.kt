@@ -108,13 +108,13 @@ class FirstUserFormScreenFragment : Fragment() {
             if (viewModel.isReadyToAddUser()) {
                 loadingDialogFragment.show(parentFragmentManager, "")
                 viewModel.addNewUser({
-                    loadingDialogFragment.stopLoadingDialog()
                     val action = FirstUserFormScreenFragmentDirections.firstToSecondAction(
                         it,
-                        viewModel.username,
-                        viewModel.password
+                        viewModel.password,
+                        viewModel.username
                     )
                     findNavController().navigate(action)
+                    loadingDialogFragment.stopLoadingDialog()
                 }, {
                     val failureSnack = Snackbar.make(
                         it,

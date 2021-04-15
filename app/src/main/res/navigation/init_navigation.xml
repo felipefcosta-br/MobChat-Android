@@ -120,9 +120,6 @@
             <argument
                 android:name="profileArgs"
                 app:argType="br.felipefcosta.mobchat.models.entities.Profile" />
-            <argument
-                android:name="passArg"
-                app:argType="string" />
         </action>
 
         <argument
@@ -160,8 +157,5 @@
         <argument
             android:name="profileArgs"
             app:argType="br.felipefcosta.mobchat.models.entities.Profile" />
-        <argument
-            android:name="passArg"
-            app:argType="string" />
     </fragment>
 </navigation>
