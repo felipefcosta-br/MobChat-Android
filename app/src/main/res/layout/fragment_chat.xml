@@ -49,12 +49,13 @@
                     android:layout_height="wrap_content"
                     android:layerType="none"
                     android:paddingTop="10dp"
-                    android:paddingBottom="10dp" />
+                    android:paddingBottom="10dp"
+                    android:text="@={viewmodel.message}" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/sendMessageButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -62,10 +63,12 @@
                 android:paddingBottom="5dp"
                 app:icon="@drawable/ic_baseline_send"
                 app:iconGravity="start"
-                app:iconSize="30dp" />
+                app:iconSize="30dp"
+                android:onClick="@{() -> viewmodel.sendTextMessage()}"/>
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/chatMessagesRecyclerView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"

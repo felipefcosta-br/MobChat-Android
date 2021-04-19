@@ -17,10 +17,8 @@ import androidx.navigation.ui.setupWithNavController
 import br.felipefcosta.mobchat.R
 import br.felipefcosta.mobchat.api.AuthApiService
 import br.felipefcosta.mobchat.api.ProfileApiService
-import br.felipefcosta.mobchat.api.SignalRApiService
 import br.felipefcosta.mobchat.databinding.ActivityMainBinding
 import br.felipefcosta.mobchat.models.repositories.AuthRepository
-import br.felipefcosta.mobchat.models.repositories.ChatHubRepository
 import br.felipefcosta.mobchat.models.repositories.ProfileRepository
 import br.felipefcosta.mobchat.models.services.*
 import br.felipefcosta.mobchat.viewmodels.MainActivityViewModel
@@ -46,10 +44,6 @@ class MainActivity : AppCompatActivity() {
         val authDataSource = AuthDataSource(authService)
         val authRepository = AuthRepository(authDataSource, tokenStorageManager)
 
-        val signalRApiService = SignalRApiService()
-        val chatHubDataSource = ChatHubDataSource(signalRApiService)
-        val chatHubRepository = ChatHubRepository(chatHubDataSource)
-
         val profileService = ProfileApiService.create()
         val profileDataSource = ProfileDataSource(profileService)
         val profileRepository =
@@ -58,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         viewModel =
             ViewModelProvider(
                 this,
-                MainViewModelFactory(application, chatHubRepository, authRepository, profileRepository)
+                MainViewModelFactory(application, authRepository, profileRepository)
             ).get(
                 MainActivityViewModel::class.java
             )

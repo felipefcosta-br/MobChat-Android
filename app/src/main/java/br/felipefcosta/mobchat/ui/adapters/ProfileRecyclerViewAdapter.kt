@@ -12,7 +12,7 @@ import com.squareup.picasso.Picasso
 
 class ProfileRecyclerViewAdapter() : RecyclerView.Adapter<ProfileRecyclerViewAdapter.ViewHolder>() {
 
-    lateinit var itemListener: RecyclerViewItemListener
+    lateinit var itemListener: SearchProfileRecyclerViewItemListener
 
     var profileList = listOf<Profile>()
         set(value) {
@@ -20,7 +20,7 @@ class ProfileRecyclerViewAdapter() : RecyclerView.Adapter<ProfileRecyclerViewAda
             notifyDataSetChanged()
         }
 
-    fun setRecyclerViewItemListener(listener: RecyclerViewItemListener) {
+    fun setRecyclerViewItemListener(listener: SearchProfileRecyclerViewItemListener) {
         itemListener = listener
     }
 
@@ -44,7 +44,8 @@ class ProfileRecyclerViewAdapter() : RecyclerView.Adapter<ProfileRecyclerViewAda
 
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        fun bindItem(profile: Profile, itemListener: RecyclerViewItemListener, position: Int){
+
+        fun bindItem(profile: Profile, itemListener: SearchProfileRecyclerViewItemListener, position: Int){
 
             val itemName = itemView.findViewById<TextView>(R.id.nameProfileTextView)
             itemName.setText("${profile.name} ${profile.surname}")

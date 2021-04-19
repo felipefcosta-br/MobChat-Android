@@ -9,7 +9,7 @@ import br.felipefcosta.mobchat.models.services.TokenStorageManager
 import kotlinx.coroutines.flow.Flow
 
 class ProfileRepository(
-    private val remoteDataSource: ProfileDataSource,
+    private val profileDataSource: ProfileDataSource,
     private val tokenStorageManager: TokenStorageManager,
     private val profileStorageManager: ProfileStorageManager
 ) {
@@ -21,7 +21,7 @@ class ProfileRepository(
         failure: () -> Unit
     ) {
         val header = "bearer ${token.accessToken.toString()}"
-        remoteDataSource.addUserProfile(header, profile, { profile ->
+        profileDataSource.addUserProfile(header, profile, { profile ->
             success(profile)
         }, {
             Log.i("ProMIT", "repository")
@@ -34,7 +34,7 @@ class ProfileRepository(
         val token = tokenStorageManager.getToken()
         if (!token?.accessToken.isNullOrBlank()) {
             val header = "bearer ${token?.accessToken.toString()}"
-            remoteDataSource.getProfileByAccountId(header, accountId, { profile ->
+            profileDataSource.getProfileByAccountId(header, accountId, { profile ->
                 success(profile)
             }, {
                 Log.i("ProMIT", "repository")
@@ -49,7 +49,7 @@ class ProfileRepository(
         val token = tokenStorageManager.getToken()
         if (!token?.accessToken.isNullOrBlank()) {
             val header = "bearer ${token?.accessToken.toString()}"
-            remoteDataSource.searchProfile(header, searchTxt, { profiles ->
+            profileDataSource.searchProfile(header, searchTxt, { profiles ->
                 Log.i("ProMIT", profiles.toString())
                 success(profiles)
             }, {
@@ -69,7 +69,7 @@ class ProfileRepository(
         val token = tokenStorageManager.getToken()
         if (!token?.accessToken.isNullOrBlank()) {
             val header = "bearer ${token?.accessToken.toString()}"
-            remoteDataSource.updateUserProfile(header, profile, { response ->
+            profileDataSource.updateUserProfile(header, profile, { response ->
                 success(response)
             }, {
                 Log.i("ProMIT", "repository")
@@ -89,7 +89,7 @@ class ProfileRepository(
     fun storeLocalProfile(profile: Profile){
         profileStorageManager.saveProfile(profile)
     }
-    fun getLocalProfile():Profile?{
+    fun getStorageProfile():Profile?{
         return profileStorageManager.getProfile()
     }
 

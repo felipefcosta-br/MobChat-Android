@@ -75,7 +75,7 @@ class ThirdUserFormScreenFragment : Fragment() {
 
         val bundle = arguments
         if (bundle == null) {
-            Log.e("Confirmation", "ConfirmationFragment did not receive traveler information")
+            Log.e("Confirmation", "ConfirmationFragment did not receive action information")
             return
         }
         val args = ThirdUserFormScreenFragmentArgs.fromBundle(bundle)

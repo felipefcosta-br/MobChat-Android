@@ -24,13 +24,12 @@ data class Chat(
     @Json(name = "Status")
     var status: String,
     @Json(name = "IsOnline")
-    var isOnline: Boolean
+    var isOnline: Boolean,
+    @Json(name = "Id")
+    val id: String?
 ) {
-    var id: String = ""
     @JvmOverloads
     constructor(
-        @Json(name = "Id")
-        id: String,
         @Json(name = "FirstMemberId")
         firstMemberId: String,
         @Json(name = "FirstMemberName")
@@ -61,8 +60,7 @@ data class Chat(
         firstMessageDate,
         lastMessageDate,
         status,
-        isOnline
-    ){
-        this.id = id
-    }
+        isOnline,
+        id = null
+    )
 }

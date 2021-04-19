@@ -6,7 +6,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class TextMessage(
     @Json(name = "ChatId")
-    var chatId: String,
+    var chatId: String?,
     @Json(name = "SenderId")
     var senderId: String,
     @Json(name = "SenderName")
@@ -32,7 +32,7 @@ data class TextMessage(
     @JvmOverloads
     constructor(
         @Json(name = "ChatId")
-        chatId: String,
+        chatId: String?,
         @Json(name = "SenderId")
         senderId: String,
         @Json(name = "SenderName")

@@ -20,11 +20,11 @@ import br.felipefcosta.mobchat.models.services.ProfileDataSource
 import br.felipefcosta.mobchat.models.services.ProfileStorageManager
 import br.felipefcosta.mobchat.models.services.TokenStorageManager
 import br.felipefcosta.mobchat.ui.adapters.ProfileRecyclerViewAdapter
-import br.felipefcosta.mobchat.ui.adapters.RecyclerViewItemListener
+import br.felipefcosta.mobchat.ui.adapters.SearchProfileRecyclerViewItemListener
 import br.felipefcosta.mobchat.viewmodels.SearchFragmentViewModel
 import br.felipefcosta.mobchat.viewmodels.SearchViewModelFactory
 
-class SearchFragment : Fragment(), RecyclerViewItemListener {
+class SearchFragment : Fragment(), SearchProfileRecyclerViewItemListener {
 
     lateinit var binding: FragmentSearchBinding
     lateinit var viewModel: SearchFragmentViewModel
@@ -67,6 +67,7 @@ class SearchFragment : Fragment(), RecyclerViewItemListener {
                 adapter.profileList = it
             }
         })
+
 
         binding.searchProfileTextField.doAfterTextChanged {
             viewModel.searchContacts(binding.searchProfileTextField.text.toString())

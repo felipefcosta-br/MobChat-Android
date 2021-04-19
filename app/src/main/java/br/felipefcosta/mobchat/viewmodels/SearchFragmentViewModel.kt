@@ -28,6 +28,6 @@ class SearchFragmentViewModel(
     }
 
     fun getProfile() :Profile?{
-        return profileRepository.getLocalProfile()
+        return profileRepository.getStorageProfile()
     }
 }
