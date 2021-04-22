@@ -5,51 +5,51 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class TextMessage(
-    @Json(name = "ChatId")
+    @Json(name = "chatId")
     var chatId: String?,
-    @Json(name = "SenderId")
+    @Json(name = "senderId")
     var senderId: String,
-    @Json(name = "SenderName")
+    @Json(name = "senderName")
     var senderName: String,
-    @Json(name = "SenderPhoto")
+    @Json(name = "senderPhoto")
     var senderPhoto: String,
-    @Json(name = "ReceiverId")
+    @Json(name = "receiverId")
     var receiverId: String,
-    @Json(name = "ReceiverName")
+    @Json(name = "receiverName")
     var receiverName: String,
-    @Json(name = "ReceiverPhoto")
+    @Json(name = "receiverPhoto")
     var receiverPhoto: String,
-    @Json(name = "MessageDate")
+    @Json(name = "messageDate")
     var messageDate: String,
-    @Json(name = "Message")
+    @Json(name = "message")
     var message: String,
-    @Json(name = "Status")
+    @Json(name = "status")
     var status: String,
-    @Json(name = "Id")
+    @Json(name = "id")
     val id: String?
 ) {
 
     @JvmOverloads
     constructor(
-        @Json(name = "ChatId")
+        @Json(name = "chatId")
         chatId: String?,
-        @Json(name = "SenderId")
+        @Json(name = "senderId")
         senderId: String,
-        @Json(name = "SenderName")
+        @Json(name = "senderName")
         senderName: String,
-        @Json(name = "SenderPhoto")
+        @Json(name = "senderPhoto")
         senderPhoto: String,
-        @Json(name = "ReceiverId")
+        @Json(name = "receiverId")
         receiverId: String,
-        @Json(name = "ReceiverName")
+        @Json(name = "receiverName")
         receiverName: String,
-        @Json(name = "ReceiverPhoto")
+        @Json(name = "receiverPhoto")
         receiverPhoto: String,
-        @Json(name = "MessageDate")
+        @Json(name = "messageDate")
         messageDate: String,
-        @Json(name = "Message")
+        @Json(name = "message")
         message: String,
-        @Json(name = "Status")
+        @Json(name = "status")
         status: String
     ) : this(
         chatId,

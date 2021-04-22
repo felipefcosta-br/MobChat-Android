@@ -4,19 +4,17 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import br.felipefcosta.mobchat.api.SignalRHubService
 import br.felipefcosta.mobchat.events.MessageEventListener
 import br.felipefcosta.mobchat.models.entities.Chat
 import br.felipefcosta.mobchat.models.entities.Profile
 import br.felipefcosta.mobchat.models.entities.TextMessage
 import br.felipefcosta.mobchat.models.repositories.ChatRepository
 import br.felipefcosta.mobchat.utils.ChatOnline
-import kotlinx.coroutines.runBlocking
 import java.time.LocalDateTime
 
 class ChatFragmentViewModel(
     application: Application,
-    private val repository: ChatRepository
+    private val repository: ChatRepository,
 ) : AndroidViewModel(application), MessageEventListener {
 
     lateinit var chat: Chat
@@ -32,15 +30,27 @@ class ChatFragmentViewModel(
         //val tokenTemp = chatHubRepository.getStorageToken() ?: return
         repository.addListener(this)
 
+        Log.i("ProMIT", "Teste 01")
         if (profile == null && contactProfile == null)
             null
-
         getCurrentChat({ chat ->
             this.chat = chat
             chatId = this.chat.id
             ChatOnline.setCurrentChat(chat)
         }, {
         })
+
+        if (profile.id == null && contactProfile.id == null)
+            return
+
+        getOldMessages(profile.id!!, contactProfile.id!!, { oldMessagesList ->
+            messagesList = oldMessagesList.toMutableList()
+            messages.postValue(messagesList.reversed().toList())
+
+        }, {
+
+        })
+
 
     }
 
@@ -81,6 +91,21 @@ class ChatFragmentViewModel(
             }
             failure()
         }, {
+        })
+    }
+
+    private fun getOldMessages(
+        userId: String,
+        contactId: String,
+        success: (List<TextMessage>) -> Unit,
+        failure: () -> Unit
+    ) {
+        repository.getTextMessageByUserIdAndContactId(userId, contactId, {oldMessagesList ->
+        if (!oldMessagesList.isNullOrEmpty()){
+           success(oldMessagesList)
+        }
+        }, {
+            failure()
         })
     }
 

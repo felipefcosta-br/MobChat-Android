@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.felipefcosta.mobchat.R
 import br.felipefcosta.mobchat.api.ChatApiService
+import br.felipefcosta.mobchat.api.TextMessageApiService
 import br.felipefcosta.mobchat.databinding.FragmentChatBinding
 import br.felipefcosta.mobchat.models.entities.Profile
 import br.felipefcosta.mobchat.models.entities.TextMessage
@@ -38,10 +39,13 @@ class ChatFragment : Fragment() {
 
         val encryptionManager = EncryptionManager(requireContext())
         val tokenStorageManager = TokenStorageManager(requireContext(), encryptionManager)
-        val chatApiService = ChatApiService.create()
 
+        val chatApiService = ChatApiService.create()
         val chatDataSource = ChatDataSource(chatApiService)
-        val repository = ChatRepository(chatDataSource, tokenStorageManager)
+
+        val textMessageApiService = TextMessageApiService.create()
+        val textMessageDataSource = TextMessageDataSource(textMessageApiService)
+        val repository = ChatRepository(chatDataSource, textMessageDataSource, tokenStorageManager)
 
 
         viewModel = ViewModelProvider(

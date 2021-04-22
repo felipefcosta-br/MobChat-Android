@@ -29,7 +29,7 @@ interface TextMessageApiService {
     ): Response<List<TextMessage>>
 
     companion object {
-        fun create(): ChatApiService {
+        fun create(): TextMessageApiService {
 
             /*val logging = HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
                 override fun log(message: String) {
@@ -46,7 +46,7 @@ interface TextMessageApiService {
                 .build()
 
             return Retrofit.Builder()
-                .baseUrl(Constants.CHATHUB_API_URL)
+                .baseUrl(Constants.CHAT_API_URL)
                 .addConverterFactory(MoshiConverterFactory.create())
                 .client(client)
                 .build()

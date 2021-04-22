@@ -6,7 +6,7 @@ object Constants {
     const val PROFILE_API_URL = "https://mobchat-profilemicroservice-api.azurewebsites.net/api/"
     //const val CHATHUB_API_URL = "https://10.0.2.2:5001/hubs/chathub"
     const val CHATHUB_API_URL = "https://mobchat-chatmicroservice-api.azurewebsites.net/hubs/chathub"
-    const val CHAT_API_URL = "http://mobchat-chatmicroservice-api.azurewebsites.net/"
+    const val CHAT_API_URL = "http://mobchat-chatmicroservice-api.azurewebsites.net/api/"
     const val BLOB_STORAGE_CONNECTION_STRING = "DefaultEndpointsProtocol=https;AccountName=" +
             "mobchatstoragecontainer;AccountKey=oBH56HdLB5s1ej3fNEB8MCPbdA4VdzPi/XaW364M6XS0PP1+" +
             "q28uDuKFHmniReFELzKfhfzE2/5PO96kAUVztA==;EndpointSuffix=core.windows.net";

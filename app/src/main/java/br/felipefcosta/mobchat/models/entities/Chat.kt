@@ -5,50 +5,50 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class Chat(
-    @Json(name = "FirstMemberId")
+    @Json(name = "firstMemberId")
     var firstMemberId: String,
-    @Json(name = "FirstMemberName")
+    @Json(name = "firstMemberName")
     var firstMemberName: String,
-    @Json(name = "FirstMemberPhoto")
+    @Json(name = "firstMemberPhoto")
     var firstMemberPhoto: String,
-    @Json(name = "SecondMemberId")
+    @Json(name = "secondMemberId")
     var secondMemberId: String,
-    @Json(name = "SecondMemberName")
+    @Json(name = "secondMemberName")
     var secondMemberName: String,
-    @Json(name = "SecondMemberPhoto")
+    @Json(name = "secondMemberPhoto")
     var secondMemberPhoto: String,
-    @Json(name = "FirstMessageDate")
+    @Json(name = "firstMessageDate")
     var firstMessageDate: String,
-    @Json(name = "LastMessageDate")
+    @Json(name = "lastMessageDate")
     var lastMessageDate: String,
-    @Json(name = "Status")
+    @Json(name = "status")
     var status: String,
-    @Json(name = "IsOnline")
+    @Json(name = "isOnline")
     var isOnline: Boolean,
-    @Json(name = "Id")
+    @Json(name = "id")
     val id: String?
 ) {
     @JvmOverloads
     constructor(
-        @Json(name = "FirstMemberId")
+        @Json(name = "firstMemberId")
         firstMemberId: String,
-        @Json(name = "FirstMemberName")
+        @Json(name = "firstMemberName")
         firstMemberName: String,
-        @Json(name = "FirstMemberPhoto")
+        @Json(name = "firstMemberPhoto")
         firstMemberPhoto: String,
-        @Json(name = "SecondMemberId")
+        @Json(name = "secondMemberId")
         secondMemberId: String,
-        @Json(name = "SecondMemberName")
+        @Json(name = "secondMemberName")
         secondMemberName: String,
-        @Json(name = "SecondMemberPhoto")
+        @Json(name = "secondMemberPhoto")
         secondMemberPhoto: String,
-        @Json(name = "FirstMessageDate")
+        @Json(name = "firstMessageDate")
         firstMessageDate: String,
-        @Json(name = "LastMessageDate")
+        @Json(name = "lastMessageDate")
         lastMessageDate: String,
-        @Json(name = "Status")
+        @Json(name = "status")
         status: String,
-        @Json(name = "IsOnline")
+        @Json(name = "isOnline")
         isOnline: Boolean
     ) : this(
         firstMemberId,

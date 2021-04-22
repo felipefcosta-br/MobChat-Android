@@ -7,6 +7,7 @@ import br.felipefcosta.mobchat.events.MessageEventListener
 import br.felipefcosta.mobchat.models.entities.Chat
 import br.felipefcosta.mobchat.models.entities.TextMessage
 import br.felipefcosta.mobchat.models.services.ChatDataSource
+import br.felipefcosta.mobchat.models.services.TextMessageDataSource
 import br.felipefcosta.mobchat.models.services.TokenStorageManager
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
@@ -14,7 +15,9 @@ import kotlinx.coroutines.runBlocking
 import java.lang.ref.WeakReference
 
 class ChatRepository(
-    private val chatDataSource: ChatDataSource, private val tokenStorageManager: TokenStorageManager
+    private val chatDataSource: ChatDataSource,
+    private val textMessageDataSource: TextMessageDataSource,
+    private val tokenStorageManager: TokenStorageManager
 ) : ChatHubEventListener {
 
     private var listener = WeakReference<MessageEventListener>(null)
@@ -66,6 +69,44 @@ class ChatRepository(
         }
     }
 
+    fun getTextMessagesByChatId(
+        chatId: String, userId: String,
+        contactId: String,
+        success: (List<TextMessage>) -> Unit,
+        failure: () -> Unit
+    ) {
+        val token = tokenStorageManager.getToken()
+        if (!token?.accessToken.isNullOrBlank()) {
+            val header = "bearer ${token?.accessToken.toString()}"
+            textMessageDataSource.getTextMessagesByChatId(header, chatId, { messageList ->
+                success(messageList)
+            }, {
+                failure()
+            })
+        }
+    }
+
+    fun getTextMessageByUserIdAndContactId(
+        userId: String,
+        contactId: String,
+        success: (List<TextMessage>) -> Unit,
+        failure: () -> Unit
+    ) {
+        val token = tokenStorageManager.getToken()
+        if (!token?.accessToken.isNullOrBlank()) {
+            val header = "bearer ${token?.accessToken.toString()}"
+            textMessageDataSource.getTextMessageByUserIdAndContactId(
+                header,
+                userId,
+                contactId,
+                { messageList ->
+                    success(messageList)
+                },
+                {
+                    failure()
+                })
+        }
+    }
 
     fun sendTextMessage(senderId: String, receiverId: String, textMessage: TextMessage) {
 
@@ -77,7 +118,7 @@ class ChatRepository(
     }
 
     override fun onMessageReceived(serializedMessage: String) {
-           
+
         val moshiJson = Moshi.Builder().build()
         val jsonAdapter: JsonAdapter<TextMessage> = moshiJson.adapter(TextMessage::class.java)
         val textMessage = jsonAdapter.fromJson(serializedMessage)
