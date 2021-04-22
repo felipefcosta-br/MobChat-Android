@@ -7,6 +7,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.felipefcosta.mobchat.R
 import br.felipefcosta.mobchat.models.entities.TextMessage
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class MessagesRecyclerViewAdapter(private val userId: String) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -61,6 +63,13 @@ class MessagesRecyclerViewAdapter(private val userId: String) :
 
             val itemMessage = itemView.findViewById<TextView>(R.id.messageTextView)
             itemMessage.text = textMessage.message
+
+            val formatter = DateTimeFormatter.ofPattern("HH:mm");
+            val dateStr = textMessage.messageDate
+            val localDateTime = LocalDateTime.parse(dateStr).format(formatter)
+
+            val itemMessageDate = itemView.findViewById<TextView>(R.id.dateTextView)
+            itemMessageDate.text = localDateTime
         }
     }
 
@@ -69,6 +78,14 @@ class MessagesRecyclerViewAdapter(private val userId: String) :
         fun bindItem(textMessage: TextMessage, position: Int) {
             val itemMessage = itemView.findViewById<TextView>(R.id.messageTextView)
             itemMessage.text = textMessage.message
+
+            val formatter = DateTimeFormatter.ofPattern("HH:mm");
+            val dateStr = textMessage.messageDate
+            val localDateTime = LocalDateTime.parse(dateStr).format(formatter)
+
+            val itemMessageDate = itemView.findViewById<TextView>(R.id.dateTextView)
+            itemMessageDate.text = localDateTime
+
         }
     }
 }

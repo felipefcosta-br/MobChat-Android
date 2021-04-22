@@ -43,8 +43,8 @@ class ChatListFragment : Fragment() {
         val tokenStorageManager = TokenStorageManager(requireContext(), encryptionManager)
         val profileStorageManager = ProfileStorageManager(requireContext(), encryptionManager)
 
-        val chatService = ChatApiService.create()
-        val chatDataSource = ChatListDataSource() // adicionar o service
+        /*val chatService = ChatApiService.create()
+        val chatDataSource = ChatListDataSource() // adicionar o service*/
         val chatRepository = ChatListRepository()
 
         val authService = AuthApiService.create()

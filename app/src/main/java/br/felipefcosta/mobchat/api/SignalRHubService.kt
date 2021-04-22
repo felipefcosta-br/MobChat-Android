@@ -1,5 +1,6 @@
 package br.felipefcosta.mobchat.api
 
+import android.annotation.SuppressLint
 import android.util.Log
 import br.felipefcosta.mobchat.events.ChatHubEventListener
 import br.felipefcosta.mobchat.models.entities.TextMessage
@@ -46,11 +47,12 @@ object SignalRHubService {
 
     }
 
+    @SuppressLint("CheckResult")
     suspend fun connectToHub(userId: String){
 
         val userIdGuid = UUID.fromString(userId)
 
-        hubConnection.start().repeat(100).subscribe({
+        hubConnection.start().repeat(1000).subscribe({
             hubConnection.send("ConnectUser", userIdGuid)
             Log.i("ProMIT", "Connect teste: ${hubConnection.connectionState.toString()}")
         },{

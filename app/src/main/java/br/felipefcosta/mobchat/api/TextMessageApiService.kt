@@ -1,7 +1,7 @@
 package br.felipefcosta.mobchat.api
 
 import br.felipefcosta.mobchat.models.entities.Chat
-import br.felipefcosta.mobchat.models.entities.Profile
+import br.felipefcosta.mobchat.models.entities.TextMessage
 import br.felipefcosta.mobchat.utils.Constants
 import okhttp3.OkHttpClient
 import retrofit2.Response
@@ -13,27 +13,20 @@ import retrofit2.http.Header
 import retrofit2.http.Path
 import java.util.concurrent.TimeUnit
 
-interface ChatApiService {
+interface TextMessageApiService {
 
-    @GET("Chats/{id}")
-    suspend fun getChat(
+    @GET("TextMessages/SenderAndReceiver/{senderId}/{receiverId}")
+    suspend fun getTextMessageByUserIdAndContactId(
         @Header("Authorization") header: String,
-        @Path("id") id: String
-    ): Response<Chat>
+        @Path("senderId") senderId: String,
+        @Path("receiverId") receiverId: String
+    ): Response<List<TextMessage>>
 
-    @GET("Chats/member/{memberId}")
-    suspend fun getChatsByUserId(
+    @GET("TextMessages/Chat/{chatId}")
+    suspend fun getTextMessagesByChatId(
         @Header("Authorization") header: String,
-        @Path("memberId") memberId: String
-    ): Response<List<Chat>>
-
-    @GET("Chats/members/{firstMemberId}/{secondMemberId}")
-    suspend fun getChatByUserIdAndContactId(
-        @Header("Authorization") header: String,
-        @Path("firstMemberId") firstMemberId: String,
-        @Path("secondMemberId") secondMemberId: String
-    ): Response<Chat>
-
+        @Path("chatId") chatId: String
+    ): Response<List<TextMessage>>
 
     companion object {
         fun create(): ChatApiService {
@@ -53,7 +46,7 @@ interface ChatApiService {
                 .build()
 
             return Retrofit.Builder()
-                .baseUrl(Constants.CHAT_API_URL)
+                .baseUrl(Constants.CHATHUB_API_URL)
                 .addConverterFactory(MoshiConverterFactory.create())
                 .client(client)
                 .build()

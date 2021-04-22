@@ -22,6 +22,7 @@ class ChatFragmentViewModel(
     lateinit var chat: Chat
     lateinit var profile: Profile
     lateinit var contactProfile: Profile
+    var chatId: String? = null
     var messagesList: MutableList<TextMessage> = emptyList<TextMessage>().toMutableList()
     var messages = MutableLiveData<List<TextMessage>>().apply { emptyList<TextMessage>() }
     var message = MutableLiveData<String>().apply { value = "" }
@@ -29,23 +30,30 @@ class ChatFragmentViewModel(
 
     fun initChat() {
         //val tokenTemp = chatHubRepository.getStorageToken() ?: return
+        repository.addListener(this)
+
         if (profile == null && contactProfile == null)
             null
-        getCurrentChat()
-        repository.addListener(this)
+
+        getCurrentChat({ chat ->
+            this.chat = chat
+            chatId = this.chat.id
+            ChatOnline.setCurrentChat(chat)
+        }, {
+        })
+
     }
 
     fun sendTextMessage() {
 
         if (profile.id == null || profile.name == null || contactProfile.id == null ||
             contactProfile.name == null || message == null
-        )
-            return
+        ) return
 
         var messageDate = LocalDateTime.now()
 
         val textMessage = TextMessage(
-            null,
+            chatId,
             profile.id!!,
             profile.name!!,
             profile.photo!!,
@@ -61,37 +69,19 @@ class ChatFragmentViewModel(
         addMessageToList(textMessage)
     }
 
-    fun addMessageToList(textMessage: TextMessage) {
+    private fun addMessageToList(textMessage: TextMessage) {
         messagesList.add(textMessage)
         messages.postValue(messagesList.toList())
     }
 
-    private fun getCurrentChat(){
-        var chat: Chat? = null
-        repository.getChatByUserIdAndContactId(profile.id!!, contactProfile.id!!, {
-            if (it != null){
-                chat = it
-            }else{
-                chat = Chat(
-                    profile.id!!,
-                    "${profile.name} ${profile.surname}",
-                    profile.photo!!,
-                    contactProfile.id!!,
-                    "${contactProfile.name} ${contactProfile.surname}",
-                    contactProfile.photo!!,
-                    "",
-                    "",
-                    "",
-                    true
-                )
+    private fun getCurrentChat(sucess: (Chat) -> Unit, failure: () -> Unit) {
+        repository.getChatByUserIdAndContactId(profile.id!!, contactProfile.id!!, { chat ->
+            if (chat != null) {
+                sucess(chat)
             }
-            this.chat = chat!!
-            ChatOnline.setCurrentChat(chat!!)
+            failure()
         }, {
-            chat = null
         })
-
-
     }
 
     override fun onMessageReceivedListener(textMessage: TextMessage) {
