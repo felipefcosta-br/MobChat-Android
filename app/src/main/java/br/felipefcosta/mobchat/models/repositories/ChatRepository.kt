@@ -4,6 +4,7 @@ import android.util.Log
 import br.felipefcosta.mobchat.api.SignalRHubService
 import br.felipefcosta.mobchat.events.ChatHubEventListener
 import br.felipefcosta.mobchat.events.MessageEventListener
+import br.felipefcosta.mobchat.models.dtos.TextMessageDto
 import br.felipefcosta.mobchat.models.entities.Chat
 import br.felipefcosta.mobchat.models.entities.TextMessage
 import br.felipefcosta.mobchat.models.services.ChatDataSource
@@ -120,7 +121,7 @@ class ChatRepository(
     override fun onMessageReceived(serializedMessage: String) {
 
         val moshiJson = Moshi.Builder().build()
-        val jsonAdapter: JsonAdapter<TextMessage> = moshiJson.adapter(TextMessage::class.java)
+        val jsonAdapter: JsonAdapter<TextMessageDto> = moshiJson.adapter(TextMessageDto::class.java)
         val textMessage = jsonAdapter.fromJson(serializedMessage)
 
         if (textMessage != null)

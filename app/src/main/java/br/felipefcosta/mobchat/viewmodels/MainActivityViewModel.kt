@@ -41,6 +41,13 @@ class MainActivityViewModel(
 
         }
 
+        @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+        fun finishConnection(){
+            runBlocking {
+                SignalRHubService.disconnect()
+            }
+        }
+
         /*if (authRepository.isValidToken()) {
             var tokenTemp = authRepository.getStoragedToken()
             if (tokenTemp != null) {
@@ -100,4 +107,5 @@ class MainActivityViewModel(
         // Install the all-trusting host verifier
         HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid)
     }
+
 }

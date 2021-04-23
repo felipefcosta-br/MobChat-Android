@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import br.felipefcosta.mobchat.events.MessageEventListener
+import br.felipefcosta.mobchat.models.dtos.TextMessageDto
 import br.felipefcosta.mobchat.models.entities.Chat
 import br.felipefcosta.mobchat.models.entities.Profile
 import br.felipefcosta.mobchat.models.entities.TextMessage
@@ -112,7 +113,20 @@ class ChatFragmentViewModel(
         })
     }
 
-    override fun onMessageReceivedListener(textMessage: TextMessage) {
+    override fun onMessageReceivedListener(textMessageDto: TextMessageDto) {
+        val textMessage = TextMessage(
+            textMessageDto.chatId,
+            textMessageDto.senderId,
+            textMessageDto.senderName,
+            textMessageDto.senderPhoto,
+            textMessageDto.receiverId,
+            textMessageDto.receiverName,
+            textMessageDto.receiverPhoto,
+            textMessageDto.messageDate,
+            textMessageDto.message,
+            textMessageDto.status,
+            textMessageDto.id
+        )
         addMessageToList(textMessage)
         Log.i("ProMIT", "mensagem recebida: ${textMessage.toString()}")
 

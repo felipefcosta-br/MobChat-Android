@@ -17,6 +17,7 @@ import androidx.navigation.ui.setupWithNavController
 import br.felipefcosta.mobchat.R
 import br.felipefcosta.mobchat.api.AuthApiService
 import br.felipefcosta.mobchat.api.ProfileApiService
+import br.felipefcosta.mobchat.api.SignalRHubService
 import br.felipefcosta.mobchat.databinding.ActivityMainBinding
 import br.felipefcosta.mobchat.models.repositories.AuthRepository
 import br.felipefcosta.mobchat.models.repositories.ProfileRepository
@@ -103,7 +104,6 @@ class MainActivity : AppCompatActivity() {
         return item.onNavDestinationSelected(findNavController(R.id.mainNavHostFragment))
                 || super.onOptionsItemSelected(item)
     }
-
 
     private fun setupBottomNavMenu(navController: NavController) {
         val mainNav = findViewById<BottomNavigationView>(R.id.main_nav_view)
