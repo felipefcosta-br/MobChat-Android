@@ -27,6 +27,7 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="drawerArrowStyle">@style/Theme.MobChat.DrawerArrowStyle</item>
     </style>
 
     <!-- Close button style -->
@@ -57,6 +58,10 @@
         <item name="android:textSize">18sp</item>
         <item name="android:layout_marginTop">12dp</item>
         <item name="android:layout_marginBottom">12dp</item>
+    </style>
+
+    <style name="Theme.MobChat.DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="color">@color/white</item>
     </style>
 
 </resources>

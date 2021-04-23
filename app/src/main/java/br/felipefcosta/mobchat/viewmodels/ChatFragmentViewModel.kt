@@ -47,7 +47,7 @@ class ChatFragmentViewModel(
 
         getOldMessages(profile.id!!, contactId!!, { oldMessagesList ->
             messagesList = oldMessagesList.toMutableList()
-            messages.postValue(messagesList.reversed().toList())
+            messages.postValue(messagesList.toList())
 
         }, {
 

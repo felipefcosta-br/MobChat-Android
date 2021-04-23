@@ -93,8 +93,8 @@ class SearchFragment : Fragment(), SearchProfileRecyclerViewItemListener {
         var profile = viewModel.getProfile()
         if (profile == null || contactprofile == null)
             return
-
-        val action = SearchFragmentDirections.searchToChatAction(profile, contactprofile)
+        val contactName = "${contactprofile.name} ${contactprofile.surname}"
+        val action = SearchFragmentDirections.searchToChatAction(profile, contactprofile, contactName)
         findNavController().navigate(action)
     }
 }

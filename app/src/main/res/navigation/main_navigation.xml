@@ -22,6 +22,9 @@
                 app:argType="br.felipefcosta.mobchat.models.entities.Chat"
                 app:nullable="true"
                 android:defaultValue="@null" />
+            <argument
+                android:name="titleArg"
+                app:argType="string" />
         </action>
     </fragment>
     <fragment
@@ -46,13 +49,16 @@
                 app:argType="br.felipefcosta.mobchat.models.entities.Profile"
                 app:nullable="true"
                 android:defaultValue="@null" />
+            <argument
+                android:name="titleArg"
+                app:argType="string" />
         </action>
     </fragment>
     <fragment
         android:id="@+id/chat_fragment"
         android:name="br.felipefcosta.mobchat.ui.views.ChatFragment"
-        android:label="fragment_private_chat"
-        tools:layout="@layout/fragment_chat" >
+        android:label="{titleArg}"
+        tools:layout="@layout/fragment_chat">
         <argument
             android:name="profileArg"
             app:argType="br.felipefcosta.mobchat.models.entities.Profile" />
@@ -66,6 +72,9 @@
             app:argType="br.felipefcosta.mobchat.models.entities.Chat"
             app:nullable="true"
             android:defaultValue="@null" />
+        <argument
+            android:name="titleArg"
+            app:argType="string" />
     </fragment>
 
 </navigation>

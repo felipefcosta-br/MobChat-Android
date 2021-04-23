@@ -80,6 +80,7 @@ class MainActivity : AppCompatActivity() {
         setupActionBar(navController, appBarConfiguration)
         setupBottomNavMenu(navController)
 
+
         val mainNav = findViewById<BottomNavigationView>(R.id.main_nav_view)
 
         navController.addOnDestinationChangedListener { controller, destination, arguments ->

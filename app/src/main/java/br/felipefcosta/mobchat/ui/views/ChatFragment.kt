@@ -3,11 +3,15 @@ package br.felipefcosta.mobchat.ui.views
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import android.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.felipefcosta.mobchat.R
 import br.felipefcosta.mobchat.api.ChatApiService
@@ -56,7 +60,21 @@ class ChatFragment : Fragment() {
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
 
+        /*val toolbar = parentFragmentManager.findFragmentById(R.id.mainToolbar)
+        parentFragment?.findNavController()?.popBackStack()
+        parentFragmentManager.addOnBackStackChangedListener()
+        val actionBar = activity?.actionBar
+        actionBar?.setHomeButtonEnabled(true)
+        actionBar?.setDisplayHomeAsUpEnabled(true)
+*/
         return binding.root
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home){
+            parentFragmentManager.popBackStack()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -97,6 +115,7 @@ class ChatFragment : Fragment() {
             }
 
         }
+
 
         viewModel.initChat()
 

@@ -105,7 +105,7 @@ class ChatListFragment : Fragment(), ChatListRecyclerViewItemListener {
 
         val adapter = ChatListRecyclerViewAdapter(viewModel.profile!!.id!!)
         adapter.setRecyclerViewItemListener(this)
-        adapter.chatList =  viewModel.chats.value!!
+        adapter.chatList = viewModel.chats.value!!
 
         binding.chatListRecyclerView.adapter = adapter
         viewModel.chats.observe(viewLifecycleOwner, {
@@ -117,10 +117,14 @@ class ChatListFragment : Fragment(), ChatListRecyclerViewItemListener {
 
     override fun recyclerViewItemClicked(view: View, chat: Chat) {
         var profile = viewModel.profile
+
         if (profile == null || chat == null)
             return
 
-        val action = ChatListFragmentDirections.chatlistToChatAction(profile, chat)
+        var contactName =
+            if (profile.id == chat.firstMemberId) chat.secondMemberName else chat.firstMemberName
+
+        val action = ChatListFragmentDirections.chatlistToChatAction(profile, chat, contactName!!)
         findNavController().navigate(action)
     }
 
