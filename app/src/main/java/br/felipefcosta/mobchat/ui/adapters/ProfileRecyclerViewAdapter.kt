@@ -20,10 +20,25 @@ class ProfileRecyclerViewAdapter() : RecyclerView.Adapter<ProfileRecyclerViewAda
             notifyDataSetChanged()
         }
 
-    fun setRecyclerViewItemListener(listener: SearchProfileRecyclerViewItemListener) {
-        itemListener = listener
-    }
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
+        fun bindItem(profile: Profile, itemListener: SearchProfileRecyclerViewItemListener, position: Int){
+
+            val itemName = itemView.findViewById<TextView>(R.id.nameProfileTextView)
+            itemName.text = "${profile.name} ${profile.surname}"
+            val itemUsername = itemView.findViewById<TextView>(R.id.usernameProfileTextView)
+            itemUsername.text = profile.userName
+            val itemImage = itemView.findViewById<ImageView>(R.id.userProfileImageView)
+            Picasso.get().load(profile.photo).resize(50, 50).centerCrop().into(itemImage)
+
+            itemView.setOnClickListener {
+                if (profile.id != null){
+                    itemListener.recyclerViewItemClicked(it, profile)
+                }
+
+            }
+        }
+    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -42,24 +57,7 @@ class ProfileRecyclerViewAdapter() : RecyclerView.Adapter<ProfileRecyclerViewAda
         return profileList.size
     }
 
-
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-
-        fun bindItem(profile: Profile, itemListener: SearchProfileRecyclerViewItemListener, position: Int){
-
-            val itemName = itemView.findViewById<TextView>(R.id.nameProfileTextView)
-            itemName.setText("${profile.name} ${profile.surname}")
-            val itemUsername = itemView.findViewById<TextView>(R.id.usernameProfileTextView)
-            itemUsername.setText(profile.userName)
-            val itemImage = itemView.findViewById<ImageView>(R.id.userProfileImageView)
-            Picasso.get().load(profile.photo).resize(50, 50).centerCrop().into(itemImage)
-
-            itemView.setOnClickListener {
-                if (profile.id != null){
-                    itemListener.recyclerViewItemClicked(it, profile)
-                }
-
-            }
-        }
+    fun setRecyclerViewItemListener(listener: SearchProfileRecyclerViewItemListener) {
+        itemListener = listener
     }
 }

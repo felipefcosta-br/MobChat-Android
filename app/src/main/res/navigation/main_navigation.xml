@@ -3,13 +3,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/main_chats_fragment">
+    app:startDestination="@id/chat_list_fragment">
 
     <fragment
-        android:id="@+id/main_chats_fragment"
+        android:id="@+id/chat_list_fragment"
         android:name="br.felipefcosta.mobchat.ui.views.ChatListFragment"
         android:label="@string/app_name"
-        tools:layout="@layout/fragment_chat_list"/>
+        tools:layout="@layout/fragment_chat_list">
+        <action
+            android:id="@+id/chatlist_to_chat_action"
+            app:destination="@id/chat_fragment">
+            <argument
+                android:name="profileArg"
+                app:argType="br.felipefcosta.mobchat.models.entities.Profile" />
+
+            <argument
+                android:name="chatArg"
+                app:argType="br.felipefcosta.mobchat.models.entities.Chat"
+                app:nullable="true"
+                android:defaultValue="@null" />
+        </action>
+    </fragment>
     <fragment
         android:id="@+id/contacts_fragment"
         android:name="br.felipefcosta.mobchat.ui.views.ContactsFragment"
@@ -29,7 +43,9 @@
                 app:argType="br.felipefcosta.mobchat.models.entities.Profile" />
             <argument
                 android:name="contactProfileArg"
-                app:argType="br.felipefcosta.mobchat.models.entities.Profile" />
+                app:argType="br.felipefcosta.mobchat.models.entities.Profile"
+                app:nullable="true"
+                android:defaultValue="@null" />
         </action>
     </fragment>
     <fragment
@@ -42,7 +58,14 @@
             app:argType="br.felipefcosta.mobchat.models.entities.Profile" />
         <argument
             android:name="contactProfileArg"
-            app:argType="br.felipefcosta.mobchat.models.entities.Profile" />
+            app:argType="br.felipefcosta.mobchat.models.entities.Profile"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="chatArg"
+            app:argType="br.felipefcosta.mobchat.models.entities.Chat"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
 
 </navigation>

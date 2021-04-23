@@ -9,26 +9,30 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import br.felipefcosta.mobchat.R
 import br.felipefcosta.mobchat.api.AuthApiService
 import br.felipefcosta.mobchat.api.ChatApiService
 import br.felipefcosta.mobchat.api.ProfileApiService
 import br.felipefcosta.mobchat.databinding.FragmentChatListBinding
+import br.felipefcosta.mobchat.models.entities.Chat
 import br.felipefcosta.mobchat.models.repositories.AuthRepository
 import br.felipefcosta.mobchat.models.repositories.ChatListRepository
 import br.felipefcosta.mobchat.models.repositories.ProfileRepository
 import br.felipefcosta.mobchat.models.services.*
+import br.felipefcosta.mobchat.ui.adapters.ChatListRecyclerViewAdapter
+import br.felipefcosta.mobchat.ui.adapters.ChatListRecyclerViewItemListener
 import br.felipefcosta.mobchat.viewmodels.ChatListFragmentViewModel
-import br.felipefcosta.mobchat.viewmodels.MainChatsViewModelFactory
+import br.felipefcosta.mobchat.viewmodels.ChatListViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 /**
 List of all user chats
  */
-class ChatListFragment : Fragment() {
+class ChatListFragment : Fragment(), ChatListRecyclerViewItemListener {
 
     lateinit var binding: FragmentChatListBinding
-    lateinit var viewModelMain: ChatListFragmentViewModel
+    lateinit var viewModel: ChatListFragmentViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,9 +47,9 @@ class ChatListFragment : Fragment() {
         val tokenStorageManager = TokenStorageManager(requireContext(), encryptionManager)
         val profileStorageManager = ProfileStorageManager(requireContext(), encryptionManager)
 
-        /*val chatService = ChatApiService.create()
-        val chatDataSource = ChatListDataSource() // adicionar o service*/
-        val chatRepository = ChatListRepository()
+        val chatApiService = ChatApiService.create()
+        val chatDataSource = ChatDataSource(chatApiService)
+        val chatListRepository = ChatListRepository(chatDataSource, tokenStorageManager)
 
         val authService = AuthApiService.create()
         val authDataSource = AuthDataSource(authService)
@@ -56,19 +60,19 @@ class ChatListFragment : Fragment() {
         val profileRepository =
             ProfileRepository(profileDataSource, tokenStorageManager, profileStorageManager)
 
-        viewModelMain = ViewModelProvider(
+        viewModel = ViewModelProvider(
             this,
-            MainChatsViewModelFactory(
+            ChatListViewModelFactory(
                 requireActivity().application,
-                chatRepository,
+                chatListRepository,
                 authRepository,
                 profileRepository
             )
         ).get(ChatListFragmentViewModel::class.java)
 
-        startChatsFragment()
+        viewModel.chats.value = emptyList<Chat>()
 
-        viewModelMain.getUserProfile({ profile ->
+        viewModel.getUserProfile({ profile ->
 
             val navController = findNavController()
             val arg = Bundle()
@@ -86,13 +90,38 @@ class ChatListFragment : Fragment() {
 
         })
 
+        binding.viewmodel = viewModel
+        binding.lifecycleOwner = this
+
 
 
         return binding.root
     }
 
-    private fun startChatsFragment() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
+        binding.chatListRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        val adapter = ChatListRecyclerViewAdapter(viewModel.profile!!.id!!)
+        adapter.setRecyclerViewItemListener(this)
+        adapter.chatList =  viewModel.chats.value!!
+
+        binding.chatListRecyclerView.adapter = adapter
+        viewModel.chats.observe(viewLifecycleOwner, {
+            it.let {
+                adapter.chatList = it
+            }
+        })
+    }
+
+    override fun recyclerViewItemClicked(view: View, chat: Chat) {
+        var profile = viewModel.profile
+        if (profile == null || chat == null)
+            return
+
+        val action = ChatListFragmentDirections.chatlistToChatAction(profile, chat)
+        findNavController().navigate(action)
     }
 
 }

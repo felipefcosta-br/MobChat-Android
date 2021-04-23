@@ -21,6 +21,9 @@ class ChatFragmentViewModel(
     lateinit var profile: Profile
     lateinit var contactProfile: Profile
     var chatId: String? = null
+    var contactId: String? = null
+    var contactName: String? = null
+    var contactPhoto: String? = null
     var messagesList: MutableList<TextMessage> = emptyList<TextMessage>().toMutableList()
     var messages = MutableLiveData<List<TextMessage>>().apply { emptyList<TextMessage>() }
     var message = MutableLiveData<String>().apply { value = "" }
@@ -30,20 +33,19 @@ class ChatFragmentViewModel(
         //val tokenTemp = chatHubRepository.getStorageToken() ?: return
         repository.addListener(this)
 
-        Log.i("ProMIT", "Teste 01")
-        if (profile == null && contactProfile == null)
-            null
-        getCurrentChat({ chat ->
-            this.chat = chat
-            chatId = this.chat.id
-            ChatOnline.setCurrentChat(chat)
-        }, {
-        })
+        if (chatId == null) {
+            getCurrentChat({ chat ->
+                this.chat = chat
+                chatId = this.chat.id
+                ChatOnline.setCurrentChat(chat)
+            }, {
+            })
+        }
 
-        if (profile.id == null && contactProfile.id == null)
+        if (profile.id == null && contactId == null)
             return
 
-        getOldMessages(profile.id!!, contactProfile.id!!, { oldMessagesList ->
+        getOldMessages(profile.id!!, contactId!!, { oldMessagesList ->
             messagesList = oldMessagesList.toMutableList()
             messages.postValue(messagesList.reversed().toList())
 
@@ -56,25 +58,26 @@ class ChatFragmentViewModel(
 
     fun sendTextMessage() {
 
-        if (profile.id == null || profile.name == null || contactProfile.id == null ||
-            contactProfile.name == null || message == null
+        if (profile.id == null || profile.name == null || contactId == null ||
+            contactName == null || message == null
         ) return
 
         var messageDate = LocalDateTime.now()
+        val userName = "${profile.name!!} ${profile.surname}"
 
         val textMessage = TextMessage(
             chatId,
             profile.id!!,
-            profile.name!!,
+            userName,
             profile.photo!!,
-            contactProfile.id!!,
-            contactProfile.name!!,
-            contactProfile.photo!!,
+            contactId!!,
+            contactName!!,
+            contactPhoto!!,
             messageDate.toString(),
             message.value.toString(),
             "online",
         )
-        repository.sendTextMessage(profile.id!!, contactProfile.id!!, textMessage)
+        repository.sendTextMessage(profile.id!!, contactId!!, textMessage)
         message.value = ""
         addMessageToList(textMessage)
     }
@@ -85,7 +88,7 @@ class ChatFragmentViewModel(
     }
 
     private fun getCurrentChat(sucess: (Chat) -> Unit, failure: () -> Unit) {
-        repository.getChatByUserIdAndContactId(profile.id!!, contactProfile.id!!, { chat ->
+        repository.getChatByUserIdAndContactId(profile.id!!, contactId!!, { chat ->
             if (chat != null) {
                 sucess(chat)
             }
@@ -100,10 +103,10 @@ class ChatFragmentViewModel(
         success: (List<TextMessage>) -> Unit,
         failure: () -> Unit
     ) {
-        repository.getTextMessageByUserIdAndContactId(userId, contactId, {oldMessagesList ->
-        if (!oldMessagesList.isNullOrEmpty()){
-           success(oldMessagesList)
-        }
+        repository.getTextMessageByUserIdAndContactId(userId, contactId, { oldMessagesList ->
+            if (!oldMessagesList.isNullOrEmpty()) {
+                success(oldMessagesList)
+            }
         }, {
             failure()
         })

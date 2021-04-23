@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
         val navController = navHost.navController
 
         appBarConfiguration = AppBarConfiguration.Builder(
-            R.id.main_chats_fragment,
+            R.id.chat_list_fragment,
             R.id.contacts_fragment,
             R.id.search_fragment
         ).build()

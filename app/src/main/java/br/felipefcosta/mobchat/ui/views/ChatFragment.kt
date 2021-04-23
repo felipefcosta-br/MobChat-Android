@@ -56,17 +56,6 @@ class ChatFragment : Fragment() {
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
 
-
-        val bundle = arguments
-        if (bundle != null) {
-            val args = ChatFragmentArgs.fromBundle(bundle)
-            if (args.profileArg != null || args.contactProfileArg != null) {
-                viewModel.profile = args.profileArg
-                viewModel.contactProfile = args.contactProfileArg
-            }
-        }
-        viewModel.initChat()
-
         return binding.root
     }
 
@@ -78,12 +67,40 @@ class ChatFragment : Fragment() {
             Log.e("Confirmation", "ConfirmationFragment did not receive action information")
             return
         }
-
         val args = ChatFragmentArgs.fromBundle(bundle)
-        val profileArg = args.profileArg as Profile
-        val contactsArg = args.contactProfileArg as Profile
 
-        if (profileArg.id == null && contactsArg.id == null) {
+        if (args.profileArg != null) {
+
+            viewModel.profile = args.profileArg
+
+            if (args.chatArg != null) {
+                viewModel.chat = args.chatArg
+                viewModel.chatId = args.chatArg.id
+                if (args.chatArg.firstMemberId == args.profileArg.id) {
+                    viewModel.contactId = args.chatArg.secondMemberId
+                    viewModel.contactName = args.chatArg.secondMemberName
+                    viewModel.contactPhoto = args.chatArg.secondMemberPhoto
+
+                } else if (args.chatArg.secondMemberId == args.profileArg.id) {
+                    viewModel.contactId = args.chatArg.firstMemberId
+                    viewModel.contactName = args.chatArg.firstMemberName
+                    viewModel.contactPhoto = args.chatArg.firstMemberPhoto
+
+                }
+
+            } else if (args.contactProfileArg != null) {
+                viewModel.contactProfile = args.contactProfileArg
+                viewModel.contactId = args.contactProfileArg.id
+                viewModel.contactName =
+                    "${args.contactProfileArg.name} ${args.contactProfileArg.surname}"
+                viewModel.contactPhoto = args.contactProfileArg.photo
+            }
+
+        }
+
+        viewModel.initChat()
+
+        if (viewModel.profile.id == null) {
             return
         }
 
@@ -94,7 +111,7 @@ class ChatFragment : Fragment() {
 
         viewModel.messages.value = emptyList<TextMessage>()
 
-        val adapter = MessagesRecyclerViewAdapter(profileArg.id!!)
+        val adapter = MessagesRecyclerViewAdapter(viewModel.profile.id!!)
         adapter.messagesList = viewModel.messages.value!!
 
         binding.chatMessagesRecyclerView.adapter = adapter

@@ -33,8 +33,12 @@ class ChatDataSource(private val chatApiService: ChatApiService) {
             val response = chatApiService.getChatByUserIdAndContactId(header, userId, contactId)
             response.run {
                 if (response.isSuccessful){
-                    val chat = response.body() as Chat
-                    success(chat)
+                    if (response.body() != null){
+                        val chat = response.body() as Chat
+                        success(chat)
+                    }else{
+                        failure()
+                    }
                 }else{
                     failure()
                 }

@@ -22,6 +22,7 @@ class SplashFragmentViewModel(
         val jwtToken = authRepository.decodeToken()
         if (jwtToken != null) {
             profileRepository.getProfileByAccountId(jwtToken.jwtPayload.sub, {
+                profileRepository.storeLocalProfile(it)
                 success(it)
             }, {
                 failure()
