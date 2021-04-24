@@ -103,8 +103,6 @@ class ChatListFragment : Fragment(), ChatListRecyclerViewItemListener {
         super.onViewCreated(view, savedInstanceState)
 
         binding.chatListRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        val itemLine = DividerItemDecoration(requireContext(), DividerItemDecoration.HORIZONTAL)
-        binding.chatListRecyclerView.addItemDecoration(itemLine)
 
         val adapter = ChatListRecyclerViewAdapter(viewModel.profile!!.id!!)
         adapter.setRecyclerViewItemListener(this)
@@ -116,6 +114,10 @@ class ChatListFragment : Fragment(), ChatListRecyclerViewItemListener {
                 adapter.chatList = it
             }
         })
+
+        DividerItemDecoration(requireContext(), DividerItemDecoration.HORIZONTAL).apply {
+            binding.chatListRecyclerView.addItemDecoration(this)
+        }
     }
 
     override fun recyclerViewItemClicked(view: View, chat: Chat) {
