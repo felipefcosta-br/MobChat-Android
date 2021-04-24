@@ -1,9 +1,8 @@
 package br.felipefcosta.mobchat.models.repositories
 
-import android.util.Log
-import br.felipefcosta.mobchat.api.SignalRHubService
-import br.felipefcosta.mobchat.events.ChatHubEventListener
-import br.felipefcosta.mobchat.events.MessageEventListener
+import br.felipefcosta.mobchat.core.SignalRHubService
+import br.felipefcosta.mobchat.presentation.events.ChatHubEventListener
+import br.felipefcosta.mobchat.presentation.events.MessageEventListener
 import br.felipefcosta.mobchat.models.dtos.TextMessageDto
 import br.felipefcosta.mobchat.models.entities.Chat
 import br.felipefcosta.mobchat.models.entities.TextMessage

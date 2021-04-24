@@ -1,7 +1,7 @@
 package br.felipefcosta.mobchat.models.services
 
 import android.util.Log
-import br.felipefcosta.mobchat.api.TextMessageApiService
+import br.felipefcosta.mobchat.core.TextMessageApiService
 import br.felipefcosta.mobchat.models.entities.TextMessage
 import kotlinx.coroutines.runBlocking
 

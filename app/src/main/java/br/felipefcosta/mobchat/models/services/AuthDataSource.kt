@@ -1,12 +1,11 @@
 package br.felipefcosta.mobchat.models.services
 
 import android.util.Log
-import br.felipefcosta.mobchat.api.AuthApiService
+import br.felipefcosta.mobchat.core.AuthApiService
 import br.felipefcosta.mobchat.models.entities.Token
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.time.LocalDateTime
 
 class AuthDataSource(private val authApiService: AuthApiService) {
 

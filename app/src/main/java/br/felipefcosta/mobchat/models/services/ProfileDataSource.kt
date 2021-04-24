@@ -1,21 +1,11 @@
 package br.felipefcosta.mobchat.models.services
 
-import android.util.Log
-import br.felipefcosta.mobchat.api.AuthApiService
-import br.felipefcosta.mobchat.api.ProfileApiService
+import br.felipefcosta.mobchat.core.ProfileApiService
 import br.felipefcosta.mobchat.models.entities.Profile
-import br.felipefcosta.mobchat.models.entities.Token
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.count
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class ProfileDataSource(private val profileApiService: ProfileApiService) {
     fun addUserProfile(

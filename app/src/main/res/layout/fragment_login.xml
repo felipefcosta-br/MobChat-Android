@@ -2,12 +2,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.views.LoginFragment">
+    tools:context=".ui.LoginFragment">
 
     <data>
         <variable
             name="viewmodel"
-            type="br.felipefcosta.mobchat.viewmodels.LoginFragmentViewModel" />
+            type="br.felipefcosta.mobchat.presentation.LoginFragmentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

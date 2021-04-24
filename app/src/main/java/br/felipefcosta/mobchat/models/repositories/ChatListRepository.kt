@@ -1,9 +1,8 @@
 package br.felipefcosta.mobchat.models.repositories
 
-import br.felipefcosta.mobchat.events.ChatHubEventListener
+import br.felipefcosta.mobchat.presentation.events.ChatHubEventListener
 import br.felipefcosta.mobchat.models.entities.Chat
 import br.felipefcosta.mobchat.models.services.ChatDataSource
-import br.felipefcosta.mobchat.models.services.TextMessageDataSource
 import br.felipefcosta.mobchat.models.services.TokenStorageManager
 
 class ChatListRepository(

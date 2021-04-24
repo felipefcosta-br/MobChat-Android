@@ -2,12 +2,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.views.MainActivity">
+    tools:context=".ui.MainActivity">
 
     <data>
         <variable
             name="viewmodel"
-            type="br.felipefcosta.mobchat.viewmodels.MainActivityViewModel" />
+            type="br.felipefcosta.mobchat.presentation.MainActivityViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

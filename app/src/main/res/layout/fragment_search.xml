@@ -2,12 +2,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.views.SearchFragment">
+    tools:context=".ui.SearchFragment">
     
     <data>
         <variable
             name="viewmodel"
-            type="br.felipefcosta.mobchat.viewmodels.SearchFragmentViewModel" />
+            type="br.felipefcosta.mobchat.presentation.SearchFragmentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:theme="@style/Theme.MobChat.NoActionBar"
-    tools:context=".ui.views.ContactsFragment">
+    tools:context=".ui.ContactsFragment">
 
     <data>
         <variable
             name="viewmodel"
-            type="br.felipefcosta.mobchat.viewmodels.ContactsFragmentViewModel" />
+            type="br.felipefcosta.mobchat.presentation.ContactsFragmentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

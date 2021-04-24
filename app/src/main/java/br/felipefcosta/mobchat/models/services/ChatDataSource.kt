@@ -1,9 +1,7 @@
 package br.felipefcosta.mobchat.models.services
 
-import android.hardware.camera2.CaptureFailure
-import br.felipefcosta.mobchat.api.ChatApiService
+import br.felipefcosta.mobchat.core.ChatApiService
 import br.felipefcosta.mobchat.models.entities.Chat
-import br.felipefcosta.mobchat.ui.adapters.MessagesRecyclerViewAdapter
 import kotlinx.coroutines.runBlocking
 
 class ChatDataSource(private val chatApiService: ChatApiService) {

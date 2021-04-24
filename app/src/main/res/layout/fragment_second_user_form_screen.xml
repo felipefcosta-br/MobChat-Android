@@ -4,12 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:theme="@style/Theme.MobChat.NoActionBar"
-    tools:context=".ui.views.SecondUserFormScreenFragment">
+    tools:context=".ui.SecondUserFormScreenFragment">
 
     <data>
         <variable
             name="viewmodel"
-            type="br.felipefcosta.mobchat.viewmodels.SecondUserFormScreenFragmentViewModel" />
+            type="br.felipefcosta.mobchat.presentation.SecondUserFormScreenFragmentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

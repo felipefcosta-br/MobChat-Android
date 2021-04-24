@@ -3,16 +3,11 @@ package br.felipefcosta.mobchat.models.services
 import android.util.Log
 import br.felipefcosta.mobchat.models.dtos.UserPasswordDto
 import br.felipefcosta.mobchat.models.entities.AppUser
-import br.felipefcosta.mobchat.api.AppUserApiService
-import br.felipefcosta.mobchat.api.AuthApiService
-import br.felipefcosta.mobchat.models.entities.Token
+import br.felipefcosta.mobchat.core.AppUserApiService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class AppUserDataSource(
     private val appUserApiService: AppUserApiService

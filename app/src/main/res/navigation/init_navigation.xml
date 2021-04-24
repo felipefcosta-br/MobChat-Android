@@ -9,7 +9,7 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="br.felipefcosta.mobchat.ui.views.SplashFragment"
+        android:name="br.felipefcosta.mobchat.ui.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash">
         <action
@@ -52,7 +52,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="br.felipefcosta.mobchat.ui.views.LoginFragment"
+        android:name="br.felipefcosta.mobchat.ui.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login">
         <action
@@ -67,7 +67,7 @@
     </fragment>
     <fragment
         android:id="@+id/firstUserFormScreenFragment"
-        android:name="br.felipefcosta.mobchat.ui.views.FirstUserFormScreenFragment"
+        android:name="br.felipefcosta.mobchat.ui.FirstUserFormScreenFragment"
         android:label="fragment_first_user_form_screen"
         tools:layout="@layout/fragment_first_user_form_screen">
         <action
@@ -106,7 +106,7 @@
 
     <fragment
         android:id="@+id/secondUserFormScreenFragment"
-        android:name="br.felipefcosta.mobchat.ui.views.SecondUserFormScreenFragment"
+        android:name="br.felipefcosta.mobchat.ui.SecondUserFormScreenFragment"
         android:label="fragment_second_user_form_screen"
         tools:layout="@layout/fragment_second_user_form_screen">
 
@@ -144,7 +144,7 @@
     </fragment>
     <fragment
         android:id="@+id/thirdUserFormScreenFragment"
-        android:name="br.felipefcosta.mobchat.ui.views.ThirdUserFormScreenFragment"
+        android:name="br.felipefcosta.mobchat.ui.ThirdUserFormScreenFragment"
         android:label="fragment_third_user_form_screen"
         tools:layout="@layout/fragment_third_user_form_screen">
         <action

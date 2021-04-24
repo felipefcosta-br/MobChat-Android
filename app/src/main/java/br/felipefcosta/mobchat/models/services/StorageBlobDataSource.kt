@@ -1,8 +1,7 @@
 package br.felipefcosta.mobchat.models.services
 
-import android.hardware.camera2.CaptureFailure
 import android.util.Log
-import br.felipefcosta.mobchat.api.StorageBlobApiService
+import br.felipefcosta.mobchat.core.StorageBlobApiService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

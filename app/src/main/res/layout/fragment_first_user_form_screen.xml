@@ -2,13 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.views.FirstUserFormScreenFragment">
+    tools:context=".ui.FirstUserFormScreenFragment">
 
     <data>
 
         <variable
             name="viewmodel"
-            type="br.felipefcosta.mobchat.viewmodels.FirstUserFormScreenFragmentViewModel" />
+            type="br.felipefcosta.mobchat.presentation.FirstUserFormScreenFragmentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
