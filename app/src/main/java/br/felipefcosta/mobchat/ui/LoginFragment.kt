@@ -7,6 +7,7 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.activity.addCallback
 import androidx.core.app.ActivityCompat
+import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -17,7 +18,7 @@ import br.felipefcosta.mobchat.models.repositories.AuthRepository
 import br.felipefcosta.mobchat.models.services.AuthDataSource
 import br.felipefcosta.mobchat.models.services.EncryptionManager
 import br.felipefcosta.mobchat.models.services.TokenStorageManager
-import br.felipefcosta.mobchat.ui.views.LoginFragmentDirections
+import br.felipefcosta.mobchat.ui.LoginFragmentDirections
 import br.felipefcosta.mobchat.presentation.LoginFragmentViewModel
 import br.felipefcosta.mobchat.presentation.LoginViewModelFactory
 import com.google.android.material.snackbar.Snackbar

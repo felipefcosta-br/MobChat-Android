@@ -4,12 +4,14 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.recyclerview.widget.RecyclerView
 import br.felipefcosta.mobchat.presentation.events.MessageEventListener
 import br.felipefcosta.mobchat.models.dtos.TextMessageDto
 import br.felipefcosta.mobchat.models.entities.Chat
 import br.felipefcosta.mobchat.models.entities.Profile
 import br.felipefcosta.mobchat.models.entities.TextMessage
 import br.felipefcosta.mobchat.models.repositories.ChatRepository
+import br.felipefcosta.mobchat.ui.adapters.MessagesRecyclerViewItemListener
 import br.felipefcosta.mobchat.utils.ChatOnline
 import java.time.LocalDateTime
 
@@ -21,6 +23,7 @@ class ChatFragmentViewModel(
     lateinit var chat: Chat
     lateinit var profile: Profile
     lateinit var contactProfile: Profile
+    lateinit var messagesRecyclerView: RecyclerView
     var chatId: String? = null
     var contactId: String? = null
     var contactName: String? = null
@@ -86,6 +89,7 @@ class ChatFragmentViewModel(
     private fun addMessageToList(textMessage: TextMessage) {
         messagesList.add(textMessage)
         messages.postValue(messagesList.toList())
+        messagesRecyclerView.smoothScrollToPosition(messagesList.count() - 1)
     }
 
     private fun getCurrentChat(sucess: (Chat) -> Unit, failure: () -> Unit) {

@@ -17,7 +17,7 @@ import br.felipefcosta.mobchat.models.repositories.AppUserRepository
 import br.felipefcosta.mobchat.models.repositories.AuthRepository
 import br.felipefcosta.mobchat.models.repositories.ProfileRepository
 import br.felipefcosta.mobchat.models.services.*
-import br.felipefcosta.mobchat.ui.views.SplashFragmentDirections
+import br.felipefcosta.mobchat.ui.SplashFragmentDirections
 import br.felipefcosta.mobchat.presentation.SplashFragmentViewModel
 import br.felipefcosta.mobchat.presentation.SplashViewModelFactory
 

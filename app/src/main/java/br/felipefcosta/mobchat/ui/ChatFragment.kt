@@ -18,7 +18,6 @@ import br.felipefcosta.mobchat.models.entities.TextMessage
 import br.felipefcosta.mobchat.models.repositories.ChatRepository
 import br.felipefcosta.mobchat.models.services.*
 import br.felipefcosta.mobchat.ui.adapters.MessagesRecyclerViewAdapter
-import br.felipefcosta.mobchat.ui.views.ChatFragmentArgs
 import br.felipefcosta.mobchat.presentation.ChatFragmentViewModel
 import br.felipefcosta.mobchat.presentation.ChatViewModelFactory
 
@@ -136,6 +135,7 @@ class ChatFragment : Fragment() {
                 adapter.messagesList = it
             }
         })
+        viewModel.messagesRecyclerView = binding.chatMessagesRecyclerView
 
     }
 }

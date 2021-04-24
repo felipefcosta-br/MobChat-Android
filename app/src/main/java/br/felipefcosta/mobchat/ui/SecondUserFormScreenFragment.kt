@@ -11,6 +11,7 @@ import android.widget.AutoCompleteTextView
 import android.widget.EditText
 import androidx.activity.addCallback
 import androidx.core.app.ActivityCompat
+import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
@@ -24,8 +25,8 @@ import br.felipefcosta.mobchat.models.repositories.ProfileRepository
 import br.felipefcosta.mobchat.models.services.*
 import br.felipefcosta.mobchat.ui.dialogs.DateSpinnerDialogFragment
 import br.felipefcosta.mobchat.ui.dialogs.LoadingDialogFragment
-import br.felipefcosta.mobchat.ui.views.SecondUserFormScreenFragmentArgs
-import br.felipefcosta.mobchat.ui.views.SecondUserFormScreenFragmentDirections
+import br.felipefcosta.mobchat.ui.SecondUserFormScreenFragmentArgs
+import br.felipefcosta.mobchat.ui.SecondUserFormScreenFragmentDirections
 import br.felipefcosta.mobchat.presentation.SecondUserFormScreenFragmentViewModel
 import br.felipefcosta.mobchat.presentation.SecondUserFormViewModelFactory
 import com.google.android.material.snackbar.Snackbar

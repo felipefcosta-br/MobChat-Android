@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -20,7 +21,7 @@ import br.felipefcosta.mobchat.models.services.ProfileStorageManager
 import br.felipefcosta.mobchat.models.services.TokenStorageManager
 import br.felipefcosta.mobchat.ui.adapters.ProfileRecyclerViewAdapter
 import br.felipefcosta.mobchat.ui.adapters.SearchProfileRecyclerViewItemListener
-import br.felipefcosta.mobchat.ui.views.SearchFragmentDirections
+import br.felipefcosta.mobchat.ui.SearchFragmentDirections
 import br.felipefcosta.mobchat.presentation.SearchFragmentViewModel
 import br.felipefcosta.mobchat.presentation.SearchViewModelFactory
 

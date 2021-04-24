@@ -22,7 +22,6 @@ import br.felipefcosta.mobchat.models.repositories.ProfileRepository
 import br.felipefcosta.mobchat.models.services.*
 import br.felipefcosta.mobchat.ui.adapters.ChatListRecyclerViewAdapter
 import br.felipefcosta.mobchat.ui.adapters.ChatListRecyclerViewItemListener
-import br.felipefcosta.mobchat.ui.views.ChatListFragmentDirections
 import br.felipefcosta.mobchat.presentation.ChatListFragmentViewModel
 import br.felipefcosta.mobchat.presentation.ChatListViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
