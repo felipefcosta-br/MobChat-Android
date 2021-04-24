@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.felipefcosta.mobchat.R
 import br.felipefcosta.mobchat.core.AuthApiService
@@ -102,6 +103,8 @@ class ChatListFragment : Fragment(), ChatListRecyclerViewItemListener {
         super.onViewCreated(view, savedInstanceState)
 
         binding.chatListRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        val itemLine = DividerItemDecoration(requireContext(), DividerItemDecoration.HORIZONTAL)
+        binding.chatListRecyclerView.addItemDecoration(itemLine)
 
         val adapter = ChatListRecyclerViewAdapter(viewModel.profile!!.id!!)
         adapter.setRecyclerViewItemListener(this)

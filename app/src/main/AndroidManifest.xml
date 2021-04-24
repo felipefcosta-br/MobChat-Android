@@ -26,7 +26,7 @@
             </intent-filter>
         </activity>
         <activity android:name="br.felipefcosta.mobchat.ui.MainActivity"
-            android:theme="@style/Theme.MobChat.NoActionBar" android:windowSoftInputMode="adjustPan"></activity>
+            android:theme="@style/Theme.MobChat.NoActionBar" android:windowSoftInputMode="adjustResize"></activity>
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="br.felipefcosta.mobchat.file_provider"
