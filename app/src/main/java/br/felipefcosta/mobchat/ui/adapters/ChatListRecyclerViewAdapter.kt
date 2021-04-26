@@ -31,6 +31,7 @@ class ChatListRecyclerViewAdapter(private val userId: String) :
             position: Int
         ) {
             val itemImageView = itemView.findViewById<ImageView>(R.id.contactImageChatListImageView)
+            itemImageView.clipToOutline = true
             val itemName = itemView.findViewById<TextView>(R.id.contactNameChatListTextView)
             val itemDate = itemView.findViewById<TextView>(R.id.lastMessageDateTextView)
             val itemOfflineMessage =

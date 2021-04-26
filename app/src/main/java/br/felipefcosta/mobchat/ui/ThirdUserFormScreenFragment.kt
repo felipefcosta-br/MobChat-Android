@@ -25,8 +25,7 @@ import br.felipefcosta.mobchat.models.repositories.AuthRepository
 import br.felipefcosta.mobchat.models.repositories.ProfileRepository
 import br.felipefcosta.mobchat.models.repositories.StorageBlobRepository
 import br.felipefcosta.mobchat.models.services.*
-import br.felipefcosta.mobchat.ui.dialogs.LoadingDialogFragment
-import br.felipefcosta.mobchat.ui.ThirdUserFormScreenFragmentArgs
+import br.felipefcosta.mobchat.ui.components.LoadingDialogFragment
 import br.felipefcosta.mobchat.presentation.ThirdUserFormScreenFragmentViewModel
 import br.felipefcosta.mobchat.presentation.ThirdUserFormViewModelFactory
 import com.google.android.material.bottomsheet.BottomSheetDialog

@@ -1,14 +1,21 @@
 package br.felipefcosta.mobchat.presentation
 
 import android.app.Application
+import android.os.Build
 import android.util.Log
+import android.view.View
+import android.view.WindowInsets
+import androidx.annotation.RequiresApi
+import androidx.core.view.doOnLayout
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import br.felipefcosta.mobchat.models.entities.Chat
 import br.felipefcosta.mobchat.models.entities.Profile
 import br.felipefcosta.mobchat.models.repositories.AuthRepository
 import br.felipefcosta.mobchat.models.repositories.ChatListRepository
 import br.felipefcosta.mobchat.models.repositories.ProfileRepository
+import javax.security.auth.callback.Callback
 
 class ChatListFragmentViewModel(
     application: Application,
@@ -57,4 +64,6 @@ class ChatListFragmentViewModel(
             failure()
         })
     }
+
+
 }

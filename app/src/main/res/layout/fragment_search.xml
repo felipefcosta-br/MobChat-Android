@@ -11,8 +11,9 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
+        android:id="@+id/searchContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:id="@+id/searchLinearLayout"
@@ -21,11 +22,11 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
+            android:baselineAligned="false"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:baselineAligned="false">
+            app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/searchProfileTextFieldLayout"
@@ -33,9 +34,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                app:endIconMode="clear_text"
                 app:hintEnabled="false"
-                app:placeholderText="@string/str_search"
-                app:endIconMode="clear_text">
+                app:placeholderText="@string/str_search">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/searchProfileTextField"

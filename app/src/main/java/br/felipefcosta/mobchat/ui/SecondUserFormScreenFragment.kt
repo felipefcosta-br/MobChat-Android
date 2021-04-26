@@ -23,14 +23,11 @@ import br.felipefcosta.mobchat.databinding.FragmentSecondUserFormScreenBinding
 import br.felipefcosta.mobchat.models.repositories.AuthRepository
 import br.felipefcosta.mobchat.models.repositories.ProfileRepository
 import br.felipefcosta.mobchat.models.services.*
-import br.felipefcosta.mobchat.ui.dialogs.DateSpinnerDialogFragment
-import br.felipefcosta.mobchat.ui.dialogs.LoadingDialogFragment
-import br.felipefcosta.mobchat.ui.SecondUserFormScreenFragmentArgs
-import br.felipefcosta.mobchat.ui.SecondUserFormScreenFragmentDirections
+import br.felipefcosta.mobchat.ui.components.DateSpinnerDialogFragment
+import br.felipefcosta.mobchat.ui.components.LoadingDialogFragment
 import br.felipefcosta.mobchat.presentation.SecondUserFormScreenFragmentViewModel
 import br.felipefcosta.mobchat.presentation.SecondUserFormViewModelFactory
 import com.google.android.material.snackbar.Snackbar
-import java.util.*
 
 /**
  *

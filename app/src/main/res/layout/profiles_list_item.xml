@@ -10,6 +10,8 @@
         android:id="@+id/userProfileImageView"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:background="@drawable/image_circle_background"
+        android:outlineProvider="background"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_account_circle" />

@@ -1,7 +1,9 @@
 package br.felipefcosta.mobchat.presentation
 
 import android.app.Application
+import android.view.View
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import br.felipefcosta.mobchat.models.entities.Profile
 import br.felipefcosta.mobchat.models.repositories.ProfileRepository
@@ -18,7 +20,6 @@ class SearchFragmentViewModel(
         profileRepository.searchProfile(searchTxt, { profilesList ->
             profiles.value = profilesList
         }, {
-
         })
     }
 

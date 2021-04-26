@@ -29,6 +29,7 @@ class ProfileRecyclerViewAdapter() : RecyclerView.Adapter<ProfileRecyclerViewAda
             val itemUsername = itemView.findViewById<TextView>(R.id.usernameProfileTextView)
             itemUsername.text = profile.userName
             val itemImage = itemView.findViewById<ImageView>(R.id.userProfileImageView)
+            itemImage.clipToOutline = true
             Picasso.get().load(profile.photo).resize(50, 50).centerCrop().into(itemImage)
 
             itemView.setOnClickListener {

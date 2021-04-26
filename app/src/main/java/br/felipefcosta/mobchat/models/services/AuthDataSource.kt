@@ -3,6 +3,7 @@ package br.felipefcosta.mobchat.models.services
 import android.util.Log
 import br.felipefcosta.mobchat.core.AuthApiService
 import br.felipefcosta.mobchat.models.entities.Token
+import kotlinx.coroutines.runBlocking
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -10,9 +11,9 @@ import retrofit2.Response
 class AuthDataSource(private val authApiService: AuthApiService) {
 
     fun getToken(success: (Token) -> Unit, failure: () -> Unit) {
-        val call = authApiService?.getToken()
-        call?.enqueue(object : Callback<Token> {
-            override fun onResponse(call: Call<Token>, response: Response<Token>) {
+        runBlocking {
+            val response = authApiService?.getToken()
+            response.run {
                 if (response.isSuccessful) {
                     val token = Token(
                         response.body()?.accessToken,
@@ -28,19 +29,14 @@ class AuthDataSource(private val authApiService: AuthApiService) {
                     failure()
                 }
             }
-
-            override fun onFailure(call: Call<Token>, t: Throwable) {
-                failure()
-            }
-
-        })
+        }
     }
 
     fun getToken(authMap: Map<String, String>, success: (Token) -> Unit, failure: () -> Unit) {
 
-        val call = authApiService?.getToken(authMap)
-        call?.enqueue(object : Callback<Token> {
-            override fun onResponse(call: Call<Token>, response: Response<Token>) {
+        runBlocking {
+            val response = authApiService?.getToken(authMap)
+            response.run {
                 if (response.isSuccessful) {
                     val token = Token(
                         response.body()?.accessToken,
@@ -56,11 +52,6 @@ class AuthDataSource(private val authApiService: AuthApiService) {
                     failure()
                 }
             }
-
-            override fun onFailure(call: Call<Token>, t: Throwable) {
-                failure()
-            }
-
-        })
+        }
     }
 }

@@ -4,6 +4,7 @@ import br.felipefcosta.mobchat.models.entities.Token
 import br.felipefcosta.mobchat.utils.Constants
 import okhttp3.OkHttpClient
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
@@ -14,12 +15,12 @@ interface AuthApiService {
 
     @POST("connect/token")
     @Headers("Content-type: application/x-www-form-urlencoded")
-    fun getToken(): Call<Token>
+    suspend fun getToken(): Response<Token>
 
     @FormUrlEncoded
     @POST("connect/token")
     @Headers("Content-type: application/x-www-form-urlencoded")
-    fun getToken(@FieldMap authMap: Map<String, String>): Call<Token>
+    suspend fun getToken(@FieldMap authMap: Map<String, String>): Response<Token>
 
     companion object {
 

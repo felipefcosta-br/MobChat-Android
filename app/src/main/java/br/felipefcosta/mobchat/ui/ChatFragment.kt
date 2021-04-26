@@ -2,10 +2,7 @@ package br.felipefcosta.mobchat.ui
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -45,7 +42,6 @@ class ChatFragment : Fragment() {
         val textMessageApiService = TextMessageApiService.create()
         val textMessageDataSource = TextMessageDataSource(textMessageApiService)
         val repository = ChatRepository(chatDataSource, textMessageDataSource, tokenStorageManager)
-
 
         viewModel = ViewModelProvider(
             this,
@@ -122,7 +118,7 @@ class ChatFragment : Fragment() {
         linearLayoutManager.stackFromEnd = true;
         linearLayoutManager.reverseLayout = false;
         binding.chatMessagesRecyclerView.layoutManager = linearLayoutManager
-        binding.chatMessagesRecyclerView.smoothScrollToPosition(viewModel.messagesList.count() -1)
+
 
         viewModel.messages.value = emptyList<TextMessage>()
 

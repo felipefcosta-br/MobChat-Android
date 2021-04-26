@@ -1,10 +1,11 @@
 package br.felipefcosta.mobchat.ui
 
+import android.os.Build
 import android.os.Bundle
+import android.view.*
+import androidx.annotation.RequiresApi
+import androidx.core.view.doOnLayout
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -29,6 +30,7 @@ class SearchFragment : Fragment(), SearchProfileRecyclerViewItemListener {
 
     lateinit var binding: FragmentSearchBinding
     lateinit var viewModel: SearchFragmentViewModel
+    private var originalMode: Int? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,6 +40,13 @@ class SearchFragment : Fragment(), SearchProfileRecyclerViewItemListener {
         binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_search, container, false
         )
+
+        originalMode = activity?.window?.getSoftInputMode()
+
+        activity?.window?.setSoftInputMode(
+            WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN
+        )
+
         val encryptionManager = EncryptionManager(requireContext())
         val tokenStorageManager = TokenStorageManager(requireContext(), encryptionManager)
         val profileStorageManager = ProfileStorageManager(requireContext(), encryptionManager)
@@ -69,7 +78,6 @@ class SearchFragment : Fragment(), SearchProfileRecyclerViewItemListener {
             }
         })
 
-
         binding.searchProfileTextField.doAfterTextChanged {
             viewModel.searchContacts(binding.searchProfileTextField.text.toString())
             if (binding.searchProfileTextField.text.isNullOrBlank()){
@@ -77,15 +85,6 @@ class SearchFragment : Fragment(), SearchProfileRecyclerViewItemListener {
            }
 
         }
-        /*binding.searchProfileButton.setOnClickListener {
-
-            if (viewModel.profiles.value != null){
-                adapter.profileList = viewModel.profiles.value!!
-            }else{
-                Log.i("ProMIT", "nulo")
-            }
-            viewModel.searchContacts(binding.searchProfileTextField.text.toString())
-        }*/
 
         return binding.root
     }
@@ -98,5 +97,15 @@ class SearchFragment : Fragment(), SearchProfileRecyclerViewItemListener {
         val action =
             SearchFragmentDirections.searchToChatAction(profile, contactprofile, contactName)
         findNavController().navigate(action)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        originalMode?.let { activity?.window?.setSoftInputMode(it) }
+        super.onDestroy()
+    }
+
+    fun Window.getSoftInputMode(): Int{
+        return attributes.softInputMode
     }
 }

@@ -21,7 +21,7 @@ import br.felipefcosta.mobchat.models.services.AuthDataSource
 import br.felipefcosta.mobchat.models.services.EncryptionManager
 import br.felipefcosta.mobchat.models.services.TokenStorageManager
 import br.felipefcosta.mobchat.utils.Constants
-import br.felipefcosta.mobchat.ui.dialogs.LoadingDialogFragment
+import br.felipefcosta.mobchat.ui.components.LoadingDialogFragment
 import br.felipefcosta.mobchat.presentation.FirstUserFormScreenFragmentViewModel
 import br.felipefcosta.mobchat.presentation.FirstUserFormViewModelFactory
 import com.google.android.material.snackbar.Snackbar

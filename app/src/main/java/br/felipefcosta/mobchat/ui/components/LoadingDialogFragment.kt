@@ -1,4 +1,4 @@
-package br.felipefcosta.mobchat.ui.dialogs
+package br.felipefcosta.mobchat.ui.components
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
