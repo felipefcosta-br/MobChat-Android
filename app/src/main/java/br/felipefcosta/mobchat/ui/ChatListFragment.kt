@@ -93,9 +93,6 @@ class ChatListFragment : Fragment(), ChatListRecyclerViewItemListener {
 
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
-
-
-
         return binding.root
     }
 

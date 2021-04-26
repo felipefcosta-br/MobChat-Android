@@ -27,10 +27,9 @@ class StorageBlobDataSource(private val storageBlobApiService: StorageBlobApiSer
         CoroutineScope(Dispatchers.IO).launch {
             storageBlobApiService.startBlobService()
             storageBlobApiService.uploadInputStreamBlobStorage(inputStream, fileName, {
-
                     Log.i("ProMIT", "url: ${it.toString()}")
+                if (!it.isNullOrBlank())
                     success(it)
-
             }, {
                 failure()
             })

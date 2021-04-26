@@ -30,6 +30,12 @@ class ChatListFragmentViewModel(
 
     init {
         profile = profileRepository.getStorageProfile()
+        if (profile == null)
+            getUserProfile({
+                profile = it
+            }, {
+                //return@getUserProfile
+            })
     }
 
     fun getUserProfile(success: (Profile) -> Unit, failure: () -> Unit) {

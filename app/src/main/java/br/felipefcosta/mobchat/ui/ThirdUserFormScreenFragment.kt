@@ -165,7 +165,7 @@ class ThirdUserFormScreenFragment : Fragment() {
 
         val loadingDialogFragment = LoadingDialogFragment(getString(R.string.str_loading_profile))
         loadingDialogFragment.show(parentFragmentManager, "")
-        viewModel.updateProfile(requireContext(), { response ->
+        viewModel.updateProfile(requireContext(), {
 
             val mainActivity = Intent(activity, MainActivity::class.java)
             startActivity(mainActivity)

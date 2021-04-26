@@ -50,8 +50,10 @@ class SecondUserFormScreenFragmentViewModel(
                 registrationDate
             )
             authRepository.getToken({ token ->
-                repository.addProfile(profile, token, {
-                    success(it)
+                repository.addProfile(profile, token, { profileCreated ->
+                    if (profileCreated != null)
+                        repository.storeLocalProfile(profileCreated)
+                    success(profileCreated)
                 }, {
                     failure()
                 })

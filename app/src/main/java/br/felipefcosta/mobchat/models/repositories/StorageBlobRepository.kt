@@ -20,10 +20,14 @@ class StorageBlobRepository(
         success: (String) -> Unit,
         failure: () -> Unit
     ) {
-        storageBlobDataSource.addInputStream(inputStream, fileName, {
-            success(it)
-        }, {
-            failure()
-        })
+        storageBlobDataSource.run {
+            addInputStream(
+                inputStream, fileName,
+                {
+                    if(!it.isNullOrBlank())
+                        success(it)
+                },{ failure() }
+            )
+        }
     }
 }

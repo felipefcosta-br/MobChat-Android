@@ -46,8 +46,10 @@ class StorageBlobApiService() {
 
             blockBlobRef.upload(inputStream, 56656565665)
 
-            Log.i("ProMIT", "url: ${blockBlobRef.uri.toString()}")
-            success(blockBlobRef.uri.toString())
+            val url = blockBlobRef.uri.toString()
+            Log.i("ProMIT", "url: ${url}")
+            if (!url.isNullOrBlank())
+                success(blockBlobRef.uri.toString())
 
         } catch (ex: Exception) {
             Log.i("ProMIT", ex.message.toString())
