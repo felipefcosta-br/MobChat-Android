@@ -54,8 +54,11 @@ class ChatFragment : Fragment() {
             ChatViewModelFactory(requireActivity().application, repository)
         ).get(ChatFragmentViewModel::class.java)
 
+
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
+
+        lifecycle.addObserver(viewModel)
 
         /*val toolbar = parentFragmentManager.findFragmentById(R.id.mainToolbar)
         parentFragment?.findNavController()?.popBackStack()

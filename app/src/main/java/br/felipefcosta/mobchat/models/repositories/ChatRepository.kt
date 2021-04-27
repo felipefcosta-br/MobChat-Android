@@ -1,5 +1,7 @@
 package br.felipefcosta.mobchat.models.repositories
 
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.OnLifecycleEvent
 import br.felipefcosta.mobchat.core.SignalRHubService
 import br.felipefcosta.mobchat.presentation.events.ChatHubEventListener
 import br.felipefcosta.mobchat.presentation.events.MessageEventListener
@@ -134,8 +136,12 @@ class ChatRepository(
 
     }
 
-    fun chatStorage(chat: Chat){
+    fun storeChat(chat: Chat){
         chatStorageManager.saveChat(chat)
+    }
+
+    fun removeChat(){
+        chatStorageManager.removeChat()
     }
 
     fun addListener(listener: MessageEventListener) {

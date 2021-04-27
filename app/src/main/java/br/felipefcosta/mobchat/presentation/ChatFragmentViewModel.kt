@@ -2,8 +2,7 @@ package br.felipefcosta.mobchat.presentation
 
 import android.app.Application
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.*
 import androidx.recyclerview.widget.RecyclerView
 import br.felipefcosta.mobchat.presentation.events.MessageEventListener
 import br.felipefcosta.mobchat.models.dtos.TextMessageDto
@@ -16,7 +15,7 @@ import java.time.LocalDateTime
 class ChatFragmentViewModel(
     application: Application,
     private val repository: ChatRepository,
-) : AndroidViewModel(application), MessageEventListener {
+) : AndroidViewModel(application), MessageEventListener, LifecycleObserver {
 
     lateinit var chat: Chat
     lateinit var profile: Profile
@@ -30,18 +29,25 @@ class ChatFragmentViewModel(
     var messages = MutableLiveData<List<TextMessage>>().apply { emptyList<TextMessage>() }
     var message = MutableLiveData<String>().apply { value = "" }
 
+    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
+    fun onStopFragment(){
+        Log.i("ProMIT", "onStop")
+        repository.removeChat()
+    }
 
     fun initChat() {
         //val tokenTemp = chatHubRepository.getStorageToken() ?: return
         repository.addListener(this)
 
-        if (chatId == null) {
+        if (chatId == null && chat == null) {
             getCurrentChat({ chat ->
                 this.chat = chat
                 chatId = this.chat.id
-                repository.chatStorage(chat)
+                repository.storeChat(chat)
             }, {
             })
+        }else{
+            repository.storeChat(chat)
         }
 
         if (profile.id == null && contactId == null)
