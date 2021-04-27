@@ -67,6 +67,7 @@ class ChatFragment : Fragment() {
         actionBar?.setHomeButtonEnabled(true)
         actionBar?.setDisplayHomeAsUpEnabled(true)
 */
+
         return binding.root
     }
 
@@ -143,4 +144,5 @@ class ChatFragment : Fragment() {
         viewModel.messagesRecyclerView = binding.chatMessagesRecyclerView
 
     }
+
 }

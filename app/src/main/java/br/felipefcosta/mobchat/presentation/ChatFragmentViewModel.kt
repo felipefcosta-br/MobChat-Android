@@ -17,10 +17,10 @@ class ChatFragmentViewModel(
     private val repository: ChatRepository,
 ) : AndroidViewModel(application), MessageEventListener, LifecycleObserver {
 
-    lateinit var chat: Chat
     lateinit var profile: Profile
     lateinit var contactProfile: Profile
     lateinit var messagesRecyclerView: RecyclerView
+    var chat: Chat? = null
     var chatId: String? = null
     var contactId: String? = null
     var contactName: String? = null
@@ -42,12 +42,12 @@ class ChatFragmentViewModel(
         if (chatId == null && chat == null) {
             getCurrentChat({ chat ->
                 this.chat = chat
-                chatId = this.chat.id
+                chatId = this.chat?.id
                 repository.storeChat(chat)
             }, {
             })
         }else{
-            repository.storeChat(chat)
+            repository.storeChat(chat!!)
         }
 
         if (profile.id == null && contactId == null)

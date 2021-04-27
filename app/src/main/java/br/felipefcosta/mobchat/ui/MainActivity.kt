@@ -81,6 +81,8 @@ class MainActivity : AppCompatActivity() {
         setupBottomNavMenu(navController)
 
 
+
+
         val mainNav = findViewById<BottomNavigationView>(R.id.main_nav_view)
 
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
@@ -90,6 +92,12 @@ class MainActivity : AppCompatActivity() {
 
             }
         }
+    }
+
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

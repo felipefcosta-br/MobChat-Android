@@ -8,6 +8,7 @@ import android.view.WindowInsets
 import androidx.annotation.RequiresApi
 import androidx.core.view.doOnLayout
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import br.felipefcosta.mobchat.models.entities.Chat
@@ -23,7 +24,7 @@ class ChatListFragmentViewModel(
     private val authRepository: AuthRepository,
     private val profileRepository: ProfileRepository
 
-) : AndroidViewModel(application) {
+) : AndroidViewModel(application), LifecycleObserver {
     var profile: Profile? = null
     var chatList: MutableList<Chat> = emptyList<Chat>().toMutableList()
     var chats = MutableLiveData<List<Chat>>().apply { emptyList<Chat>() }
