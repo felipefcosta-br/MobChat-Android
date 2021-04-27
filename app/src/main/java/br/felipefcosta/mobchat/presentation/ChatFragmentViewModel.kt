@@ -11,8 +11,6 @@ import br.felipefcosta.mobchat.models.entities.Chat
 import br.felipefcosta.mobchat.models.entities.Profile
 import br.felipefcosta.mobchat.models.entities.TextMessage
 import br.felipefcosta.mobchat.models.repositories.ChatRepository
-import br.felipefcosta.mobchat.ui.adapters.MessagesRecyclerViewItemListener
-import br.felipefcosta.mobchat.utils.ChatOnline
 import java.time.LocalDateTime
 
 class ChatFragmentViewModel(
@@ -41,7 +39,7 @@ class ChatFragmentViewModel(
             getCurrentChat({ chat ->
                 this.chat = chat
                 chatId = this.chat.id
-                ChatOnline.setCurrentChat(chat)
+                repository.chatStorage(chat)
             }, {
             })
         }
@@ -96,6 +94,23 @@ class ChatFragmentViewModel(
         repository.getChatByUserIdAndContactId(profile.id!!, contactId!!, { chat ->
             if (chat != null) {
                 sucess(chat)
+            } else {
+
+                var messageDate = LocalDateTime.now()
+                var newChat = Chat(
+                    profile.id!!,
+                    "${profile.name} ${profile.surname}",
+                    profile.photo!!,
+                    contactId!!,
+                    contactName!!,
+                    contactPhoto!!,
+                    messageDate.toString(),
+                    messageDate.toString(),
+                    "",
+                    true,
+                    0
+                )
+                sucess(newChat)
             }
             failure()
         }, {

@@ -35,13 +35,19 @@ class ChatFragment : Fragment() {
 
         val encryptionManager = EncryptionManager(requireContext())
         val tokenStorageManager = TokenStorageManager(requireContext(), encryptionManager)
+        val chatStorageManager = ChatStorageManager(requireContext(), encryptionManager)
 
         val chatApiService = ChatApiService.create()
         val chatDataSource = ChatDataSource(chatApiService)
 
         val textMessageApiService = TextMessageApiService.create()
         val textMessageDataSource = TextMessageDataSource(textMessageApiService)
-        val repository = ChatRepository(chatDataSource, textMessageDataSource, tokenStorageManager)
+        val repository = ChatRepository(
+            chatDataSource,
+            textMessageDataSource,
+            tokenStorageManager,
+            chatStorageManager
+        )
 
         viewModel = ViewModelProvider(
             this,
@@ -62,7 +68,7 @@ class ChatFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home){
+        if (item.itemId == android.R.id.home) {
             parentFragmentManager.popBackStack()
         }
         return super.onOptionsItemSelected(item)

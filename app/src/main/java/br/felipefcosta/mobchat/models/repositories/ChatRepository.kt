@@ -7,6 +7,7 @@ import br.felipefcosta.mobchat.models.dtos.TextMessageDto
 import br.felipefcosta.mobchat.models.entities.Chat
 import br.felipefcosta.mobchat.models.entities.TextMessage
 import br.felipefcosta.mobchat.models.services.ChatDataSource
+import br.felipefcosta.mobchat.models.services.ChatStorageManager
 import br.felipefcosta.mobchat.models.services.TextMessageDataSource
 import br.felipefcosta.mobchat.models.services.TokenStorageManager
 import com.squareup.moshi.JsonAdapter
@@ -17,7 +18,8 @@ import java.lang.ref.WeakReference
 class ChatRepository(
     private val chatDataSource: ChatDataSource,
     private val textMessageDataSource: TextMessageDataSource,
-    private val tokenStorageManager: TokenStorageManager
+    private val tokenStorageManager: TokenStorageManager,
+    private val chatStorageManager: ChatStorageManager
 ) : ChatHubEventListener {
 
     private var listener = WeakReference<MessageEventListener>(null)
@@ -123,12 +125,22 @@ class ChatRepository(
         val jsonAdapter: JsonAdapter<TextMessageDto> = moshiJson.adapter(TextMessageDto::class.java)
         val textMessage = jsonAdapter.fromJson(serializedMessage)
 
-        if (textMessage != null)
-            listener.get()?.onMessageReceivedListener(textMessage)
+        val chat = chatStorageManager.getChat()
+        if ((textMessage != null) && (textMessage?.senderId == chat?.firstMemberId || textMessage?.senderId == chat?.secondMemberId) &&
+            (textMessage?.receiverId == chat?.firstMemberId || textMessage?.receiverId == chat?.secondMemberId)){
+
+                listener.get()?.onMessageReceivedListener(textMessage)
+        }
+
+    }
+
+    fun chatStorage(chat: Chat){
+        chatStorageManager.saveChat(chat)
     }
 
     fun addListener(listener: MessageEventListener) {
         this.listener = WeakReference(listener)
     }
+
 
 }
