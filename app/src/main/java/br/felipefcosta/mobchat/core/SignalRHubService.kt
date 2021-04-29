@@ -105,4 +105,5 @@ object SignalRHubService {
     fun addListener(listener: ChatHubEventListener){
         this.listener = WeakReference(listener)
     }
+
 }

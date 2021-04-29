@@ -1,6 +1,7 @@
 package br.felipefcosta.mobchat.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ import br.felipefcosta.mobchat.core.ChatApiService
 import br.felipefcosta.mobchat.core.ProfileApiService
 import br.felipefcosta.mobchat.databinding.FragmentChatListBinding
 import br.felipefcosta.mobchat.models.entities.Chat
+import br.felipefcosta.mobchat.models.entities.Profile
 import br.felipefcosta.mobchat.models.repositories.AuthRepository
 import br.felipefcosta.mobchat.models.repositories.ChatListRepository
 import br.felipefcosta.mobchat.models.repositories.ProfileRepository
@@ -72,51 +74,22 @@ class ChatListFragment : Fragment(), ChatListRecyclerViewItemListener {
         ).get(ChatListFragmentViewModel::class.java)
 
         viewModel.chats.value = emptyList<Chat>()
-
-        viewModel.getUserProfile({ profile ->
-
-            val navController = findNavController()
-            val arg = Bundle()
-            arg.putParcelable("profileArg", profile)
-            //val bundle = bundleOf("profileArg" to profile)
-
-            val mainNav = activity?.findViewById<BottomNavigationView>(R.id.main_nav_view)
-            mainNav?.setupWithNavController(navController)
-            mainNav?.setOnNavigationItemSelectedListener {
-                navController.navigate(it.itemId, arg)
-                true
-            }
-
-        }, {
-
-        })
-
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
         lifecycle.addObserver(viewModel)
 
+           viewModel.initChatListFragmentViewModel({
+               requireActivity().runOnUiThread {
+                   initNavigateArg(it)
+                   initChatListRecyclerView(it)
+               }
+
+           },{
+
+           })
+
+
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        binding.chatListRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-
-        val adapter = ChatListRecyclerViewAdapter(viewModel.profile!!.id!!)
-        adapter.setRecyclerViewItemListener(this)
-        adapter.chatList = viewModel.chats.value!!
-
-        binding.chatListRecyclerView.adapter = adapter
-        viewModel.chats.observe(viewLifecycleOwner, {
-            it.let {
-                adapter.chatList = it
-            }
-        })
-
-        DividerItemDecoration(requireContext(), DividerItemDecoration.HORIZONTAL).apply {
-            binding.chatListRecyclerView.addItemDecoration(this)
-        }
     }
 
     override fun recyclerViewItemClicked(view: View, chat: Chat) {
@@ -130,6 +103,41 @@ class ChatListFragment : Fragment(), ChatListRecyclerViewItemListener {
 
         val action = ChatListFragmentDirections.chatlistToChatAction(profile, chat, contactName!!)
         findNavController().navigate(action)
+    }
+
+    private fun initChatListRecyclerView(profile: Profile){
+
+        binding.chatListRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        val adapter = ChatListRecyclerViewAdapter(profile.id!!)
+        adapter.setRecyclerViewItemListener(this)
+        adapter.chatList = viewModel.chats.value!!
+
+        binding.chatListRecyclerView.adapter = adapter
+        viewModel.chats.observe(viewLifecycleOwner, {
+            it.let {
+                adapter.chatList = it
+            }
+        })
+
+        DividerItemDecoration(requireContext(), DividerItemDecoration.HORIZONTAL).apply {
+            binding.chatListRecyclerView.addItemDecoration(this)
+        }
+
+    }
+
+    private fun initNavigateArg(profile: Profile){
+        val navController = findNavController()
+        val arg = Bundle()
+        arg.putParcelable("profileArg", profile)
+        //val bundle = bundleOf("profileArg" to profile)
+
+        val mainNav = activity?.findViewById<BottomNavigationView>(R.id.main_nav_view)
+        mainNav?.setupWithNavController(navController)
+        mainNav?.setOnNavigationItemSelectedListener {
+            navController.navigate(it.itemId, arg)
+            true
+        }
     }
 
 }

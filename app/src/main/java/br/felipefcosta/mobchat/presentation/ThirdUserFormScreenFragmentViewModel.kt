@@ -26,8 +26,8 @@ class ThirdUserFormScreenFragmentViewModel(
         var inputStream = context.contentResolver.openInputStream(photoUri)
         if (inputStream != null) {
             val photoName = "photo${profile.accountId.hashCode()}.jpg"
-            storageBlobRepository.addInputStream(inputStream, photoName, { it ->
-                profile.photo = it
+            storageBlobRepository.addInputStream(inputStream, photoName, {url ->
+                profile.photo = url
                 repository.updateProfile(profile, { response ->
                     success(response)
                 }, {

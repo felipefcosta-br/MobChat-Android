@@ -1,3 +1,4 @@
+
 package br.felipefcosta.mobchat.ui
 
 import android.os.Bundle
@@ -59,14 +60,6 @@ class ChatFragment : Fragment() {
         binding.lifecycleOwner = this
 
         lifecycle.addObserver(viewModel)
-
-        /*val toolbar = parentFragmentManager.findFragmentById(R.id.mainToolbar)
-        parentFragment?.findNavController()?.popBackStack()
-        parentFragmentManager.addOnBackStackChangedListener()
-        val actionBar = activity?.actionBar
-        actionBar?.setHomeButtonEnabled(true)
-        actionBar?.setDisplayHomeAsUpEnabled(true)
-*/
 
         return binding.root
     }

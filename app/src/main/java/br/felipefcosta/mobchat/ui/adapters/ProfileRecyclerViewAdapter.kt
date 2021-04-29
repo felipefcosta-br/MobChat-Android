@@ -20,9 +20,13 @@ class ProfileRecyclerViewAdapter() : RecyclerView.Adapter<ProfileRecyclerViewAda
             notifyDataSetChanged()
         }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bindItem(profile: Profile, itemListener: SearchProfileRecyclerViewItemListener, position: Int){
+        fun bindItem(
+            profile: Profile,
+            itemListener: SearchProfileRecyclerViewItemListener,
+            position: Int
+        ) {
 
             val itemName = itemView.findViewById<TextView>(R.id.nameProfileTextView)
             itemName.text = "${profile.name} ${profile.surname}"
@@ -30,10 +34,17 @@ class ProfileRecyclerViewAdapter() : RecyclerView.Adapter<ProfileRecyclerViewAda
             itemUsername.text = profile.userName
             val itemImage = itemView.findViewById<ImageView>(R.id.userProfileImageView)
             itemImage.clipToOutline = true
-            Picasso.get().load(profile.photo).resize(50, 50).centerCrop().into(itemImage)
+            if (!profile.photo.isNullOrBlank()) {
+                Picasso.get()
+                    .load(profile.photo)
+                    .resize(50, 50)
+                    .centerCrop()
+                    .into(itemImage)
+
+            }
 
             itemView.setOnClickListener {
-                if (profile.id != null){
+                if (profile.id != null) {
                     itemListener.recyclerViewItemClicked(it, profile)
                 }
 

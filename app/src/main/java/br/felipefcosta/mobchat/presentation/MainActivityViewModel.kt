@@ -21,6 +21,21 @@ class MainActivityViewModel(
 ) : AndroidViewModel(application), LifecycleObserver {
     lateinit var profile: Profile
 
+    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    fun initUserProfile(){
+        var profileTemp = profileRepository.getStorageProfile()
+        if (profileTemp == null){
+            getUserProfile({
+                profile = it
+            }, {
+                //return@getUserProfile
+            })
+        }else{
+            profile = profileTemp
+        }
+
+    }
+
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     fun startConnection() {
 
@@ -31,7 +46,7 @@ class MainActivityViewModel(
             profile = profileTemp
             val userIdGuid = UUID.fromString(profile.id!!)
 
-            useInsecureSSL()
+            //useInsecureSSL()
             SignalRHubService.startHubConnection(token, userIdGuid)
             runBlocking {
                 SignalRHubService.connectToHub(profile.id!!)
@@ -45,28 +60,6 @@ class MainActivityViewModel(
                 SignalRHubService.disconnect()
             }
         }
-
-        /*if (authRepository.isValidToken()) {
-            var tokenTemp = authRepository.getStoragedToken()
-            if (tokenTemp != null) {
-
-                chatHubRepository.startConnection(tokenTemp)
-                getUserProfile({
-                    if (profile.id != null){
-                        var isConnected = false
-                        while (!isConnected){
-                            if (chatHubRepository.isConnected() == HubConnectionState.CONNECTED){
-                                chatHubRepository.connectToHub(profile.id!!)
-                                isConnected = true
-                            }
-                        }
-                    }
-
-                }, {
-
-                })
-            }
-        }*/
 
     }
 
@@ -86,7 +79,7 @@ class MainActivityViewModel(
 
     }
 
-    fun useInsecureSSL() {
+    /*fun useInsecureSSL() {
 
         // Create a trust manager that does not validate certificate chains
         val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
@@ -104,6 +97,7 @@ class MainActivityViewModel(
 
         // Install the all-trusting host verifier
         HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid)
-    }
+    }*/
+
 
 }

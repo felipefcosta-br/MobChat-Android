@@ -4,12 +4,14 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
 import androidx.recyclerview.widget.RecyclerView
+import br.felipefcosta.mobchat.core.SignalRHubService
 import br.felipefcosta.mobchat.presentation.events.MessageEventListener
 import br.felipefcosta.mobchat.models.dtos.TextMessageDto
 import br.felipefcosta.mobchat.models.entities.Chat
 import br.felipefcosta.mobchat.models.entities.Profile
 import br.felipefcosta.mobchat.models.entities.TextMessage
 import br.felipefcosta.mobchat.models.repositories.ChatRepository
+import kotlinx.coroutines.runBlocking
 import java.time.LocalDateTime
 
 class ChatFragmentViewModel(
@@ -52,6 +54,12 @@ class ChatFragmentViewModel(
 
         if (profile.id == null && contactId == null)
             return
+
+        /*if(!SignalRHubService.isConnected()){
+            runBlocking {
+                SignalRHubService.connectToHub(profile.id!!)
+            }
+        }*/
 
         getOldMessages(profile.id!!, contactId!!, { oldMessagesList ->
             messagesList = oldMessagesList.toMutableList()

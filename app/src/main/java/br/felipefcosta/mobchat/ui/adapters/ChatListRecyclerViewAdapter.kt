@@ -37,15 +37,24 @@ class ChatListRecyclerViewAdapter(private val userId: String) :
             val itemOfflineMessage =
                 itemView.findViewById<TextView>(R.id.offlineMessageCountTextView)
             if (chat.firstMemberId == userId) {
-                Picasso.get().load(chat.secondMemberPhoto).placeholder(R.drawable.ic_account_circle)
-                    .resize(50, 50).centerCrop().into(itemImageView)
+                if (!chat.secondMemberPhoto.isNullOrBlank()) {
+                    Picasso.get()
+                        .load(chat.secondMemberPhoto)
+                        .placeholder(R.drawable.ic_account_circle)
+                        .resize(50, 50).centerCrop().into(itemImageView)
+                }
                 itemName.text = chat.secondMemberName
 
-            } else if (chat.secondMemberId == userId) {
 
-                Picasso.get().load(chat.firstMemberPhoto).placeholder(R.drawable.ic_account_circle)
-                    .resize(50, 50).centerCrop().into(itemImageView)
+            } else if (chat.secondMemberId == userId) {
+                if (!chat.firstMemberPhoto.isNullOrBlank()) {
+                    Picasso.get()
+                        .load(chat.firstMemberPhoto)
+                        .placeholder(R.drawable.ic_account_circle)
+                        .resize(50, 50).centerCrop().into(itemImageView)
+                }
                 itemName.text = chat.firstMemberName
+
 
             }
 
@@ -54,15 +63,15 @@ class ChatListRecyclerViewAdapter(private val userId: String) :
             val localDateTime = LocalDateTime.parse(dateStr).format(formatter)
             itemDate.text = localDateTime.toString()
 
-            if (chat.unreadMessages <= 0){
+            if (chat.unreadMessages <= 0) {
                 itemOfflineMessage.visibility = View.GONE
-            }else{
+            } else {
                 itemOfflineMessage.visibility = View.VISIBLE
                 itemOfflineMessage.text = chat.unreadMessages.toString()
             }
 
             itemView.setOnClickListener {
-                if (chat.id != null){
+                if (chat.id != null) {
                     itemListener.recyclerViewItemClicked(it, chat)
                 }
             }
@@ -75,7 +84,8 @@ class ChatListRecyclerViewAdapter(private val userId: String) :
         parent: ViewGroup,
         viewType: Int
     ): ChatListRecyclerViewAdapter.ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.chat_list_item, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.chat_list_item, parent, false)
         return ChatListRecyclerViewAdapter.ViewHolder(view)
     }
 

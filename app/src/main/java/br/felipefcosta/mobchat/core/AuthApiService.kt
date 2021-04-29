@@ -30,7 +30,7 @@ interface AuthApiService {
 
             val client = OkHttpClient.Builder()
                 .connectTimeout(1, TimeUnit.MINUTES)
-                .readTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(40, TimeUnit.SECONDS)
                 .writeTimeout(20, TimeUnit.SECONDS)
                 .addInterceptor(authInterceptor)
                 .build()
@@ -46,14 +46,10 @@ interface AuthApiService {
 
         fun create(): AuthApiService {
 
-            /*val logging = HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
-                override fun log(message: String) {
-                    Log.i("ProMIT", message)
-                }
-            })
-            logging.level = (HttpLoggingInterceptor.Level.BODY)*/
-
             val client = OkHttpClient.Builder()
+                .connectTimeout(1, TimeUnit.MINUTES)
+                .readTimeout(40, TimeUnit.SECONDS)
+                .writeTimeout(20, TimeUnit.SECONDS)
                 .build()
 
             return Retrofit.Builder()
