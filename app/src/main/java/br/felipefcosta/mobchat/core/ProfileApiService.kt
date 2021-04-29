@@ -20,7 +20,7 @@ interface ProfileApiService {
     ): Response<Profile>
 
     @GET("Profiles/{id}")
-    fun getProfile(
+    suspend fun getProfile(
         @Header("Authorization") header: String,
         @Path("id") id: String
     ): Response<Profile>

@@ -42,7 +42,7 @@ class MainActivityViewModel(
         var token = authRepository.getStoragedToken()
         var profileTemp = profileRepository.getStorageProfile()
 
-        if (token != null && profileTemp != null) {
+        /*if (token != null && profileTemp != null) {
             profile = profileTemp
             val userIdGuid = UUID.fromString(profile.id!!)
 
@@ -52,7 +52,7 @@ class MainActivityViewModel(
                 SignalRHubService.connectToHub(profile.id!!)
             }
 
-        }
+        }*/
 
         @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
         fun finishConnection(){

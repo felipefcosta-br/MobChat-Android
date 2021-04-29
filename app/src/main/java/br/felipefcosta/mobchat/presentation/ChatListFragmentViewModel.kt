@@ -21,22 +21,33 @@ class ChatListFragmentViewModel(
     var chatList: MutableList<Chat> = emptyList<Chat>().toMutableList()
     var chats = MutableLiveData<List<Chat>>().apply { emptyList<Chat>() }
 
+
+
     fun initChatListFragmentViewModel(success: (Profile) -> Unit, failure: () -> Unit){
         profile = profileRepository.getStorageProfile()
         if (profile == null) {
 
             getUserProfile({
-                profile = it
-                success(profile!!)
+                if (it != null){
+                    profile = it
+                    success(profile!!)
+                    repository.checkHubConnection(profile?.id!!)
+                }
+
             }, {
                 //return@getUserProfile
             })
         }else{
             success(profile!!)
+            repository.checkHubConnection(profile?.id!!)
             startChatListRecyclerView()
         }
+
+
+
         repository.addListener(this)
     }
+
 
     private fun getUserProfile(success: (Profile) -> Unit, failure: () -> Unit) {
         val jwtToken = authRepository.decodeToken()

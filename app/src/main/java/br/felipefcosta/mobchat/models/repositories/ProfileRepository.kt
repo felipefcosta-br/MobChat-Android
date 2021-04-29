@@ -22,7 +22,10 @@ class ProfileRepository(
     ) {
         val header = "bearer ${token.accessToken.toString()}"
         profileDataSource.addUserProfile(header, profile, { profile ->
-            success(profile)
+            if (profile != null){
+                storeLocalProfile(profile)
+                success(profile)
+            }
         }, {
             Log.i("ProMIT", "repository")
             failure()
@@ -35,7 +38,10 @@ class ProfileRepository(
         if (!token?.accessToken.isNullOrBlank()) {
             val header = "bearer ${token?.accessToken.toString()}"
             profileDataSource.getProfileByAccountId(header, accountId, { profile ->
-                success(profile)
+                if (profile != null){
+                    storeLocalProfile(profile)
+                    success(profile)
+                }
             }, {
                 Log.i("ProMIT", "repository")
                 failure()
@@ -71,6 +77,8 @@ class ProfileRepository(
             val header = "bearer ${token?.accessToken.toString()}"
             profileDataSource.updateUserProfile(header, profile, { response ->
                 success(response)
+                if (response)
+                    refreshLocalProfile(profile.id!!)
             }, {
                 Log.i("ProMIT", "repository")
                 failure()
@@ -82,8 +90,19 @@ class ProfileRepository(
 
     }
 
-    fun getProfileByEmail(email: String){
+    private fun refreshLocalProfile(profileId: String){
 
+        val token = tokenStorageManager.getToken()
+        if (!token?.accessToken.isNullOrBlank()) {
+            val header = "bearer ${token?.accessToken.toString()}"
+            profileDataSource.getProfileById(header, profileId, { profile ->
+                if (profile != null){
+                    storeLocalProfile(profile)
+                }
+            }, {
+                Log.i("ProMIT", "repository")
+            })
+        }
     }
 
     fun storeLocalProfile(profile: Profile){

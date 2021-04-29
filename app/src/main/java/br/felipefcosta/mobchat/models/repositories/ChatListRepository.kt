@@ -10,7 +10,9 @@ import br.felipefcosta.mobchat.presentation.events.ChatHubEventListener
 import br.felipefcosta.mobchat.presentation.events.ChatMessageEventListener
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
+import kotlinx.coroutines.runBlocking
 import java.lang.ref.WeakReference
+import java.util.*
 
 class ChatListRepository(
     private val chatDataSource: ChatDataSource,
@@ -56,6 +58,22 @@ class ChatListRepository(
         this.listener = WeakReference(listener)
     }
 
+    fun checkHubConnection(userId: String){
+        val token = tokenStorageManager.getToken()
+        if (!token?.accessToken.isNullOrBlank()) {
+            if (!SignalRHubService.isHubConnectionInitialized()){
+                val userIdGuid = UUID.fromString(userId)
+                runBlocking {
+                    SignalRHubService.startHubConnection(token!!, userIdGuid)
+                    SignalRHubService.connectToHub(userId)
+                }
+
+
+            }
+        }
+
+    }
+
     override fun onMessageReceived(serializedMessage: String) {
 
         val moshiJson = Moshi.Builder().build()
@@ -69,7 +87,7 @@ class ChatListRepository(
         if (!token?.accessToken.isNullOrBlank()) {
             val header = "bearer ${token?.accessToken.toString()}"
             chatDataSource.getChatsByUserId(header, textMessage?.receiverId!!, { chatList ->
-                Log.i("ProMIT", "teste chat list repository ${chatList.toString()}")
+                Log.i("ProMIT", "chat list repository ${chatList.toString()}")
                 listener.get()?.onChatReceiveMessageListener(chatList)
             }, {
 

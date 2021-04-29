@@ -29,6 +29,26 @@ class ProfileDataSource(private val profileApiService: ProfileApiService) {
         }
     }
 
+    fun getProfileById(
+        header: String,
+        profileId: String,
+        success: (Profile) -> Unit,
+        failure: () -> Unit
+    ) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = profileApiService.getProfile(header, profileId)
+            response.run {
+                if (this.isSuccessful) {
+                    val profile = response.body() as Profile
+                    success(profile)
+                } else {
+                    failure()
+                }
+            }
+        }
+
+    }
+
     fun getProfileByAccountId(
         header: String,
         accountId: String,

@@ -52,7 +52,7 @@ object SignalRHubService {
 
         val userIdGuid = UUID.fromString(userId)
 
-        hubConnection.start().repeat(1000).subscribe({
+        hubConnection.start().repeat(5).subscribe({
             hubConnection.send("ConnectUser", userIdGuid)
             Log.i("ProMIT", "Connect teste: ${hubConnection.connectionState.toString()}")
         },{
@@ -104,6 +104,10 @@ object SignalRHubService {
 
     fun addListener(listener: ChatHubEventListener){
         this.listener = WeakReference(listener)
+    }
+
+    fun isHubConnectionInitialized(): Boolean{
+        return this::hubConnection.isInitialized
     }
 
 }

@@ -55,6 +55,9 @@ class ChatFragmentViewModel(
         if (profile.id == null && contactId == null)
             return
 
+        repository.checkHubConnection(profile.id!!)
+
+
         /*if(!SignalRHubService.isConnected()){
             runBlocking {
                 SignalRHubService.connectToHub(profile.id!!)

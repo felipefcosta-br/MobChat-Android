@@ -16,6 +16,7 @@ import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import kotlinx.coroutines.runBlocking
 import java.lang.ref.WeakReference
+import java.util.*
 
 class ChatRepository(
     private val chatDataSource: ChatDataSource,
@@ -110,6 +111,22 @@ class ChatRepository(
                     failure()
                 })
         }
+    }
+
+    fun checkHubConnection(userId: String){
+        val token = tokenStorageManager.getToken()
+        if (!token?.accessToken.isNullOrBlank()) {
+            if (!SignalRHubService.isHubConnectionInitialized()){
+                val userIdGuid = UUID.fromString(userId)
+                runBlocking {
+                    SignalRHubService.startHubConnection(token!!, userIdGuid)
+                    SignalRHubService.connectToHub(userId)
+                }
+
+
+            }
+        }
+
     }
 
     fun sendTextMessage(senderId: String, receiverId: String, textMessage: TextMessage) {
